@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/CAmpusPartyTest.iml" filepath="$PROJECT_DIR$/CAmpusPartyTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/interfaceSDL/interfaceSDL.iml" filepath="$PROJECT_DIR$/interfaceSDL/interfaceSDL.iml" />
-      <module fileurl="file://$PROJECT_DIR$/interfaceSDL/interfaceSDL.iml" filepath="$PROJECT_DIR$/interfaceSDL/interfaceSDL.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartdevicelink/smartdevicelink.iml" filepath="$PROJECT_DIR$/smartdevicelink/smartdevicelink.iml" />
     </modules>
   </component>

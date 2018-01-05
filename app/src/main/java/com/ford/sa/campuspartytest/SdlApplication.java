@@ -3,6 +3,7 @@ package com.ford.sa.campuspartytest;
 import android.util.Log;
 
 import com.ford.sa.interfacesdl.Config;
+import com.ford.sa.interfacesdl.hmi.CurrentHMIState;
 import com.ford.sa.interfacesdl.hmi.EnumDisplayLayout;
 import com.ford.sa.interfacesdl.hmi.HMIScreenManager;
 import com.ford.sa.interfacesdl.listeners.ServiceListeners;
@@ -19,6 +20,9 @@ import com.smartdevicelink.proxy.rpc.SoftButton;
 import com.smartdevicelink.proxy.rpc.enums.ImageType;
 import com.smartdevicelink.proxy.rpc.enums.SoftButtonType;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -28,10 +32,22 @@ import java.util.Vector;
 
 public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
+
+    Vector<SoftButton> softButtons = new Vector<SoftButton>();
+    SoftButton btnGetData = new SoftButton();
+    SoftButton btnSubsData = new SoftButton();
+    SoftButton btnStopSub = new SoftButton();
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
         try {
+
+
+
+
 
 
             ////------------------------------------------------------------------------------------------
@@ -41,7 +57,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
             ServiceListeners.getInstance().listenerScreen = new ServiceListeners.ListenerScreen() {
                 @Override
                 public void showWelcomeScreen() {
-                    HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.NON_MEDIA);
+                    HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.TEXT_AND_SOFTBUTTONS_WITH_GRAPHIC );
 
                     HMIScreenManager.getInstance().setNewShow();
 
@@ -49,69 +65,37 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     HMIScreenManager.getInstance().newShow.setMainField2("New Teste Bruno");
                     HMIScreenManager.getInstance().newShow.setMainField3("Teste Data Collection");
 
+                    btnGetData.setSoftButtonID(1);
+                    btnGetData.setType(SoftButtonType.SBT_BOTH);
+                    Image imgGetData = new Image();
+                    imgGetData.setValue("start.png");
+                    imgGetData.setImageType(ImageType.DYNAMIC);
+                    btnGetData.setImage(imgGetData);
+                    btnGetData.setText("Get");
+                    btnGetData.setIsHighlighted(false);
+                    softButtons.add(btnGetData);
 
-                    Vector<SoftButton> softButtons = new Vector<SoftButton>();
 
-			        /* Button */
-                    SoftButton newSB1 = new SoftButton();
-                    newSB1.setSoftButtonID(1);
-                    newSB1.setType(SoftButtonType.SBT_BOTH);
 
-                    Image newImg1 = new Image();
-                    newImg1.setValue("start.png");
-                    newImg1.setImageType(ImageType.DYNAMIC);
-                    newSB1.setImage(newImg1);
-                    newSB1.setText("GetData");
-                    softButtons.add(newSB1);
+                    btnSubsData.setSoftButtonID(2);
+                    btnSubsData.setType(SoftButtonType.SBT_BOTH);
+                    Image imgSubsData = new Image();
+                    imgSubsData.setValue("diag.png");
+                    imgSubsData.setImageType(ImageType.DYNAMIC);
+                    btnSubsData.setImage(imgSubsData);
+                    btnSubsData.setText("Subs");
+                    softButtons.add(btnSubsData);
 
-                    /* Button */
-                    SoftButton newSB2 = new SoftButton();
-                    newSB2.setSoftButtonID(2);
-                    newSB2.setType(SoftButtonType.SBT_BOTH);
 
-                    Image newImg2 = new Image();
-                    newImg2.setValue("stop.png");
-                    newImg2.setImageType(ImageType.DYNAMIC);
-                    newSB2.setImage(newImg2);
-                    newSB2.setText("Subscribe Data");
-                    softButtons.add(newSB2);
-
-                    /* Button */
-                    /*SoftButton newSB3 = new SoftButton();
-                    newSB3.setSoftButtonID(3);
-                    newSB3.setType(SoftButtonType.SBT_BOTH);
-
+                    btnStopSub.setSoftButtonID(3);
+                    btnStopSub.setType(SoftButtonType.SBT_BOTH);
                     Image newImg3 = new Image();
-                    newImg3.setValue("diag.png");
+                    newImg3.setValue("stop.png");
                     newImg3.setImageType(ImageType.DYNAMIC);
-                    newSB3.setImage(newImg3);
-                    newSB3.setText("btn3");
-                    softButtons.add(newSB3);
+                    btnStopSub.setImage(newImg3);
+                    btnStopSub.setText("Stop");
+                    //softButtons.add(btnStopSub);
 
-
-                    SoftButton newSB4 = new SoftButton();
-                    newSB4.setSoftButtonID(4);
-                    newSB4.setType(SoftButtonType.SBT_BOTH);
-
-                    Image newImg4 = new Image();
-                    newImg4.setValue("send.png");
-                    newImg4.setImageType(ImageType.DYNAMIC);
-                    newSB4.setImage(newImg4);
-                    newSB4.setText("btn4");
-                    softButtons.add(newSB4);
-
-
-                    SoftButton newSB5 = new SoftButton();
-                    newSB5.setSoftButtonID(6);
-                    newSB5.setType(SoftButtonType.SBT_BOTH);
-
-                    Image newImg5 = new Image();
-                    newImg5.setValue("send.png");
-                    newImg5.setImageType(ImageType.DYNAMIC);
-                    newSB5.setImage(newImg4);
-                    newSB5.setText("btn5");
-                    softButtons.add(newSB5);
-                    */
                     HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
 
                     HMIScreenManager.getInstance().mostrarTela();
@@ -172,7 +156,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 public void onGetVehicleDataResponse(GetVehicleDataResponse response) {
                     HMIScreenManager.getInstance().newShow.setMainField3("Data Collected!");
                     HMIScreenManager.getInstance().mostrarTela();
-
+                    CurrentHMIState.dataCollectionActive = false;
                 }
             };
 
@@ -185,8 +169,37 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
             ServiceListeners.getInstance().listenerSubscribeData = new ServiceListeners.ListenerSubscribeData() {
                 @Override
                 public void onVehicleData(OnVehicleData notification) {
-                    HMIScreenManager.getInstance().newShow.setMainField3("Data Collected!");
+
+
+
+
+                    //for (String obj : VehicleParams) {
+                    //    if (notification.getParameters(obj) != null) {
+                    //        HMIScreenManager.getInstance().newShow.setMainField3(obj + ": " + notification.getParameters(obj).toString() );
+                    //        HMIScreenManager.getInstance().mostrarTela();
+                    //    }
+                    //}
+
+                    CarData.getInstance().processVehicleSubscribe(notification);
+
+
+                    if (notification.getParameters("fuelLevel") != null) {
+                        HMIScreenManager.getInstance().newShow.setMainField3("FuelLevel: " + notification.getParameters("fuelLevel").toString() );
+                    }
+
+                    if (notification.getParameters("speed") != null) {
+                        HMIScreenManager.getInstance().newShow.setMainField3("speed: " + notification.getParameters("speed").toString() );
+                    }
+
+                    if (notification.getParameters("prndl") != null) {
+                        HMIScreenManager.getInstance().newShow.setMainField3("PRNDL: " + notification.getParameters("prndl").toString() );
+                    }
+
                     HMIScreenManager.getInstance().mostrarTela();
+
+
+
+
                 }
             };
 
@@ -214,63 +227,53 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 @Override
                 public void onOnButtonPress(OnButtonPress notification) {
 
-                    Vector<SoftButton> softButtons = new Vector<SoftButton>();
+
 
                     switch (notification.getCustomButtonName()){
                         case 1:
-                            //HMIScreenManager.getInstance().newShow.setMainField3("Botão 1 pressionado");
-                            TelematicsCollector.getInstance().setGetInit();
 
-                            HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
-                            HMIScreenManager.getInstance().newShow.setMainField2("Getting Car Data");
-                            HMIScreenManager.getInstance().newShow.setMainField3("Data colleting...");
+                            if (!btnGetData.getIsHighlighted()) {
+                                CurrentHMIState.dataCollectionActive = true;
+                                TelematicsCollector.getInstance().setGetInit();
 
-                            HMIScreenManager.getInstance().mostrarTela();
+                                HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
+                                HMIScreenManager.getInstance().newShow.setMainField2("Getting Car Data");
+                                HMIScreenManager.getInstance().newShow.setMainField3("Data colleting...");
+
+                                HMIScreenManager.getInstance().mostrarTela();
+                            }
 
                             break;
                         case 2:
-                            //HMIScreenManager.getInstance().newShow.setMainField3("Botão 2 pressionado");
 
-
+                            CurrentHMIState.dataCollectionActive = true;
                             TelematicsCollector.getInstance().setSubscribeVehicleData();
 
                             HMIScreenManager.getInstance().setNewShow();
-                            HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.NON_MEDIA);
+
+
+                            HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.TEXT_AND_SOFTBUTTONS_WITH_GRAPHIC );
 
 
                             HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
                             HMIScreenManager.getInstance().newShow.setMainField2("Subscribing Car Data");
                             HMIScreenManager.getInstance().newShow.setMainField3("Data colleting...");
 
-                            softButtons = new Vector<SoftButton>();
-                            /* Button */
-                            SoftButton btnStop = new SoftButton();
-                            btnStop.setSoftButtonID(5);
-                            btnStop.setType(SoftButtonType.SBT_BOTH);
-
-                            Image imgStop = new Image();
-                            imgStop.setValue("stop.png");
-                            imgStop.setImageType(ImageType.DYNAMIC);
-                            btnStop.setImage(imgStop);
-                            btnStop.setText("Stop");
-                            softButtons.add(btnStop);
+                            softButtons.clear();
+                            btnGetData.setIsHighlighted(true);
+                            softButtons.add(btnGetData);
+                            softButtons.add(btnStopSub);
 
                             HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
                             HMIScreenManager.getInstance().mostrarTela();
 
-
-
                             break;
                         case 3:
-                            HMIScreenManager.getInstance().newShow.setMainField3("Botão 3 pressionado");
-                            break;
-                        case 4:
-                            HMIScreenManager.getInstance().newShow.setMainField3("Botão 4 pressionado");
-                            break;
-                        case 5:
 
+
+                            TelematicsCollector.getInstance().setUnsubscribeVehicleData();
                             HMIScreenManager.getInstance().setNewShow();
-                            HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.NON_MEDIA);
+                            HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.TEXT_AND_SOFTBUTTONS_WITH_GRAPHIC);
 
 
                             HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
@@ -278,65 +281,25 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                             HMIScreenManager.getInstance().newShow.setMainField3("Subscribe Stoped");
 
 
-
-			                /* Button */
-                            SoftButton newSB1 = new SoftButton();
-                            newSB1.setSoftButtonID(1);
-                            newSB1.setType(SoftButtonType.SBT_BOTH);
-
-                            Image newImg1 = new Image();
-                            newImg1.setValue("start.png");
-                            newImg1.setImageType(ImageType.DYNAMIC);
-                            newSB1.setImage(newImg1);
-                            newSB1.setText("GetData");
-                            softButtons.add(newSB1);
-
-                            /* Button */
-                            SoftButton newSB2 = new SoftButton();
-                            newSB2.setSoftButtonID(2);
-                            newSB2.setType(SoftButtonType.SBT_BOTH);
-
-                            Image newImg2 = new Image();
-                            newImg2.setValue("stop.png");
-                            newImg2.setImageType(ImageType.DYNAMIC);
-                            newSB2.setImage(newImg2);
-                            newSB2.setText("Subscribe Data");
-                            softButtons.add(newSB2);
-
-                            /* Button */
-                            SoftButton newSB3 = new SoftButton();
-                            newSB3.setSoftButtonID(3);
-                            newSB3.setType(SoftButtonType.SBT_BOTH);
-
-                            Image newImg3 = new Image();
-                            newImg3.setValue("diag.png");
-                            newImg3.setImageType(ImageType.DYNAMIC);
-                            newSB3.setImage(newImg3);
-                            newSB3.setText("btn3");
-                            softButtons.add(newSB3);
-
-                            /* Button */
-                            SoftButton newSB4 = new SoftButton();
-                            newSB4.setSoftButtonID(4);
-                            newSB4.setType(SoftButtonType.SBT_BOTH);
-
-                            Image newImg4 = new Image();
-                            newImg4.setValue("send.png");
-                            newImg4.setImageType(ImageType.DYNAMIC);
-                            newSB4.setImage(newImg4);
-                            newSB4.setText("btn4");
-                            softButtons.add(newSB4);
+                            softButtons.clear();
+                            btnGetData.setIsHighlighted(false);
+                            softButtons.add(btnGetData);
+                            softButtons.add(btnSubsData);
 
                             HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
 
                             HMIScreenManager.getInstance().mostrarTela();
 
+                            CurrentHMIState.dataCollectionActive = false;
+
+
                             break;
+
                     }
 
 
                     //HMIScreenManager.getInstance().newShow.setMainField3("Botão "+ notification.getCustomButtonName()  +" pressionado");
-                    HMIScreenManager.getInstance().mostrarTela();
+                    //HMIScreenManager.getInstance().mostrarTela();
                     //Log.d("TESTE","TESTE BRUNO");
 
 
