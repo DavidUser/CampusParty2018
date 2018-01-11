@@ -1,5 +1,9 @@
 package com.ford.sa.campuspartytest;
 
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.util.Log;
 
 import com.ford.sa.interfacesdl.Config;
@@ -23,7 +27,9 @@ import com.smartdevicelink.proxy.rpc.enums.SoftButtonType;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -38,7 +44,11 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
     SoftButton btnSubsData = new SoftButton();
     SoftButton btnStopSub = new SoftButton();
 
+    private SdlApplication INSTANCE;
 
+    public SdlApplication() {
+        this.INSTANCE = this;
+    }
 
     @Override
     public void onCreate() {
@@ -99,12 +109,11 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
 
                     HMIScreenManager.getInstance().mostrarTela();
+
+                    //ClearCache threadCache = new ClearCache(INSTANCE);
+                    //threadCache.run();
                 }
             };
-
-
-
-
 
             ////------------------------------------------------------------------------------------------
             /**
@@ -309,10 +318,122 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
             initSdlService();
 
 
+            new Thread() {
+                @Override
+                public void run() {
+                    do {
+                        try {
+                            Thread.sleep(30000);
+                            //deleteCache(ctx);
+                            System.gc();
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } while (true);
+                }
+            }.start();
+
 
         } catch (Exception e) {
             e.getStackTrace();
         }
 
+
+
+
     }
+
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onTrimMemory(int level) {
+        Log.d("CAMPUSPARTY", "onTrimMemory: Level-"+level);
+        super.onTrimMemory(level);
+    }
+
+
+
+
+
+    public class ClearCache implements Runnable {
+
+
+        private Context ctx;
+
+        public ClearCache(Context ctx) {
+            this.ctx = ctx;
+        }
+
+        @Override
+        public void run() {
+
+            do {
+                try {
+                    Thread.sleep(30000);
+                    //deleteCache(ctx);
+                    System.gc();
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } while (isRunning(ctx));
+
+
+        }
+
+        public void deleteCache(Context context) {
+            try {
+                File dir = context.getCacheDir();
+                deleteDir(dir);
+            } catch (Exception e) {}
+        }
+
+        public boolean deleteDir(File dir) {
+            if (dir != null && dir.isDirectory()) {
+                String[] children = dir.list();
+                for (int i = 0; i < children.length; i++) {
+                    boolean success = deleteDir(new File(dir, children[i]));
+                    if (!success) {
+                        return false;
+                    }
+                }
+                return dir.delete();
+            } else if(dir!= null && dir.isFile()) {
+                return dir.delete();
+            } else {
+                return false;
+            }
+        }
+
+        public boolean isRunning(Context ctx) {
+            ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+
+            List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
+
+            for (ActivityManager.RunningTaskInfo task : tasks) {
+                if (ctx.getPackageName().equalsIgnoreCase(task.baseActivity.getPackageName()))
+                    return true;
+            }
+            return false;
+        }
+
+    }
+
+
 }
