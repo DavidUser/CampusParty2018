@@ -1,17 +1,26 @@
 package com.ford.sa.campuspartytest;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Service;
+import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.ford.sa.interfacesdl.Config;
+import com.ford.sa.interfacesdl.LockScreenActivity;
 import com.ford.sa.interfacesdl.hmi.CurrentHMIState;
 import com.ford.sa.interfacesdl.hmi.EnumDisplayLayout;
 import com.ford.sa.interfacesdl.hmi.HMIScreenManager;
 import com.ford.sa.interfacesdl.listeners.ServiceListeners;
 import com.ford.sa.interfacesdl.telematics.TelematicsCollector;
+import com.smartdevicelink.exception.SdlException;
+import com.smartdevicelink.proxy.SdlProxyALM;
 import com.smartdevicelink.proxy.rpc.AddCommandResponse;
 import com.smartdevicelink.proxy.rpc.AddSubMenuResponse;
 import com.smartdevicelink.proxy.rpc.GetVehicleDataResponse;
@@ -19,9 +28,11 @@ import com.smartdevicelink.proxy.rpc.Image;
 import com.smartdevicelink.proxy.rpc.OnButtonPress;
 import com.smartdevicelink.proxy.rpc.OnCommand;
 import com.smartdevicelink.proxy.rpc.OnHMIStatus;
+import com.smartdevicelink.proxy.rpc.OnLockScreenStatus;
 import com.smartdevicelink.proxy.rpc.OnVehicleData;
 import com.smartdevicelink.proxy.rpc.SoftButton;
 import com.smartdevicelink.proxy.rpc.enums.ImageType;
+import com.smartdevicelink.proxy.rpc.enums.LockScreenStatus;
 import com.smartdevicelink.proxy.rpc.enums.SoftButtonType;
 
 import org.json.JSONException;
@@ -30,6 +41,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -39,12 +51,17 @@ import java.util.Vector;
 public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
 
+    int cont = 0;
     Vector<SoftButton> softButtons = new Vector<SoftButton>();
     SoftButton btnGetData = new SoftButton();
     SoftButton btnSubsData = new SoftButton();
     SoftButton btnStopSub = new SoftButton();
 
+    static TextView txtConteudo;
+
     private SdlApplication INSTANCE;
+
+    //LockScreenAct lockScreen;
 
     public SdlApplication() {
         this.INSTANCE = this;
@@ -54,11 +71,6 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
     public void onCreate() {
         super.onCreate();
         try {
-
-
-
-
-
 
             ////------------------------------------------------------------------------------------------
             /**
@@ -154,18 +166,35 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 }
             };
 
-
-
             ////------------------------------------------------------------------------------------------
             /**
              * Get Data Listener
              */
             ServiceListeners.getInstance().listenerGetData = new ServiceListeners.ListenerGetData() {
                 @Override
-                public void onGetVehicleDataResponse(GetVehicleDataResponse response) {
+                public void onGetVehicleDataResponse(Context ctx, GetVehicleDataResponse response) {
                     HMIScreenManager.getInstance().newShow.setMainField3("Data Collected!");
                     HMIScreenManager.getInstance().mostrarTela();
                     CurrentHMIState.dataCollectionActive = false;
+
+                    String texto = " - Vin: " + response.getVin();
+
+                    cont = cont+1;
+
+                    try {
+                        txtConteudo.setText(cont + texto);
+                        LockScreenActivity.recreateAct();
+                    } catch(Exception e) {
+                        e.getStackTrace();
+                    }
+
+
+                    //sendLockScreenMsg(cont + texto);
+
+
+
+                    //lockScreen.setTxtView(cont + " - Data Collected!!\n\n\n" + texto );
+
                 }
             };
 
@@ -181,27 +210,30 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
 
 
-
-                    //for (String obj : VehicleParams) {
-                    //    if (notification.getParameters(obj) != null) {
-                    //        HMIScreenManager.getInstance().newShow.setMainField3(obj + ": " + notification.getParameters(obj).toString() );
-                    //        HMIScreenManager.getInstance().mostrarTela();
-                    //    }
-                    //}
-
                     CarData.getInstance().processVehicleSubscribe(notification);
 
 
                     if (notification.getParameters("fuelLevel") != null) {
                         HMIScreenManager.getInstance().newShow.setMainField3("FuelLevel: " + notification.getParameters("fuelLevel").toString() );
+                        //lockScreen.setTxtView("FuelLevel: " + notification.getParameters("fuelLevel").toString());
+
+
+                        txtConteudo.setText("FuelLevel: " + notification.getParameters("fuelLevel").toString());
+
+
                     }
 
                     if (notification.getParameters("speed") != null) {
                         HMIScreenManager.getInstance().newShow.setMainField3("speed: " + notification.getParameters("speed").toString() );
+                        //lockScreen.setTxtView("speed: " + notification.getParameters("speed").toString());
+                        txtConteudo.setText("speed: " + notification.getParameters("speed").toString());
+
                     }
 
                     if (notification.getParameters("prndl") != null) {
                         HMIScreenManager.getInstance().newShow.setMainField3("PRNDL: " + notification.getParameters("prndl").toString() );
+                        //lockScreen.setTxtView("PRNDL: " + notification.getParameters("prndl").toString());
+                        txtConteudo.setText("PRNDL: " + notification.getParameters("prndl").toString());
                     }
 
                     HMIScreenManager.getInstance().mostrarTela();
@@ -211,7 +243,6 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
                 }
             };
-
 
             ////------------------------------------------------------------------------------------------
             /**
@@ -250,6 +281,9 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                                 HMIScreenManager.getInstance().newShow.setMainField3("Data colleting...");
 
                                 HMIScreenManager.getInstance().mostrarTela();
+
+                                txtConteudo.setText("Get Data init...");
+
                             }
 
                             break;
@@ -315,7 +349,75 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 }
             };
 
+
+
+
+
+            ServiceListeners.getInstance().listenerLockScreenEvents = new ServiceListeners.ListenerLockScreenEvents() {
+                @Override
+                public void onDisposeSyncProxy() {
+
+
+                    LockScreenActivity.updateLockScreenStatus(LockScreenStatus.OFF);
+
+
+                }
+
+                @Override
+                public void onLockScreenNotification(OnLockScreenStatus notification) {
+                    LockScreenActivity.updateLockScreenStatus(notification.getShowLockScreen());
+
+                    sendLockScreenMsg("Bruno Garcia Testando o Broadcast Receiver - TESTE");
+
+                    /*if(notification.getHMILevel().equals("HMI_FULL")  && notification.getShowLockScreen() == LockScreenStatus.REQUIRED) {
+                        Intent showLockScreenIntent = new Intent(INSTANCE, LockScreenAct.class);
+                        showLockScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //if(lockScreenManager.getLockScreenIcon() != null){
+                        //    showLockScreenIntent.putExtra(LockScreenActivity.LOCKSCREEN_BITMAP_EXTRA, lockScreenManager.getLockScreenIcon());
+                        //}
+                        startActivity(showLockScreenIntent);
+                    }else if(notification.getShowLockScreen() == LockScreenStatus.OFF){
+                        sendBroadcast(new Intent("CLOSE_LOCK_SCREEN"));
+                    }*/
+
+                }
+
+                @Override
+                public void onCreate(Activity activity, Bundle bundle) {
+
+                    try {
+                        activity.setContentView(R.layout.activity_lock_screen_new);
+                        txtConteudo =  (TextView) activity.findViewById(R.id.txtConteudo);
+
+
+                        txtConteudo.setText("Bruno testando....");
+
+                    } catch (Exception e) {
+                        e.getStackTrace();
+                    }
+
+
+
+                }
+
+                @Override
+                public void onBroadcastReceive(Context context, Intent intent) {
+
+                }
+            };
+
+
+
+            //LockScreenAct.registerActivityLifecycle(INSTANCE);
+
+            //lockScreen = new LockScreenAct();
+
+
+            Config.ConnectionType = ServiceListeners.ProxyConnection.SYNC;
+
             initSdlService();
+
+
 
 
             new Thread() {
@@ -342,6 +444,12 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
 
 
+    }
+
+    private void sendLockScreenMsg(String text) {
+        Intent intent = new Intent("MSG");
+        intent.putExtra("extra", text );
+        sendBroadcast(intent);
     }
 
 
