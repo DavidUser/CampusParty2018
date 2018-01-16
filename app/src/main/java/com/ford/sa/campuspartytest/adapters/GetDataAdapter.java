@@ -13,6 +13,8 @@ import com.ford.sa.campuspartytest.CarData;
 import com.ford.sa.campuspartytest.R;
 import com.ford.sa.campuspartytest.interfaces.RecyclerViewOnClickListenerHack;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,36 +49,75 @@ public class GetDataAdapter extends RecyclerView.Adapter<GetDataAdapter.GetDataV
     @Override
     public GetDataViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(CATEGORIA, "onCreateViewHolder()");
-        View v = mLayoutInflater.inflate(R.layout.item_areceber_card, parent, false);
-        AreceberViewHolder mvh = new AreceberViewHolder(v);
-        return mvh;
+
+
+        try {
+
+            View v = mLayoutInflater.inflate(R.layout.item_cardata_card, parent, false);
+            GetDataViewHolder mvh = new GetDataViewHolder(v);
+            return mvh;
+
+        } catch (Exception e) {
+            e.getStackTrace();
+            return null;
+        }
+
+
+
+    }
+
+    public void addListItem(CarData c, int position){
+        mListCarData.add(c);
+        notifyItemInserted(position);
+    }
+
+    public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack r){
+        mRecyclerViewOnClickListenerHack = r;
     }
 
     @Override
     public void onBindViewHolder(GetDataViewHolder holder, int position) {
 
+        CarData obj = mListCarData.get(position);
+        holder.txtVin.setText(obj.getVin() );
+
+        holder.txtFuelLevel.setText(obj.getFuelLevel());
+
+        holder.txtRpm.setText(obj.getRpm());
+
+        holder.txtSpeed.setText( obj.getSpeed() );
+
+        long yourmilliseconds = obj.getTimestamp() ;
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss");
+        Date resultdate = new Date(yourmilliseconds);
+        holder.txtDt.setText(sdf.format(resultdate));
+
+        holder.txtPrndl.setText(obj.getPrndl());
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mListCarData.size();
     }
 
     public class GetDataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         //public RelativeLayout rrAreceber;
-        //public TextView txtStatusAreceber, txtDataPagamento, txtValorPago, txtDescricao, txtVencimento, txtValorMensal, txtFormaPagamento;
+        public TextView txtVin, txtFuelLevel, txtRpm, txtSpeed, txtPrndl, txtDt;
 
         public GetDataViewHolder(View itemView) {
             super(itemView);
-            //rrAreceber = (RelativeLayout) itemView.findViewById(R.id.rrAreceber);
-            //txtStatusAreceber = (TextView)itemView.findViewById(R.id.txtStatusAreceber);
-            //txtDataPagamento = (TextView)itemView.findViewById(R.id.txtDataPagamento);
-            //txtValorPago = (TextView)itemView.findViewById(R.id.txtValorPago);
-            //txtDescricao = (TextView)itemView.findViewById(R.id.txtDescricao);
-            //txtVencimento = (TextView)itemView.findViewById(R.id.txtVencimento);
-            //txtValorMensal = (TextView)itemView.findViewById(R.id.txtValorMensal);
-            //txtFormaPagamento = (TextView)itemView.findViewById(R.id.txtFormaPagamento);
+
+            txtVin = (TextView)itemView.findViewById(R.id.txtVin);
+            txtFuelLevel = (TextView)itemView.findViewById(R.id.txtFuelLevel);
+            txtRpm = (TextView)itemView.findViewById(R.id.txtRpm );
+
+            txtSpeed = (TextView)itemView.findViewById(R.id.txtSpeed);
+            txtPrndl = (TextView)itemView.findViewById(R.id.txtPrndl);
+            txtDt = (TextView)itemView.findViewById(R.id.txtDt);
+
             itemView.setOnClickListener(this);
         }
 

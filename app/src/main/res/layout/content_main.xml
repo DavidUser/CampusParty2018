@@ -9,6 +9,28 @@
     tools:showIn="@layout/activity_main">
 
 
+    <ImageView
+        android:id="@+id/imgFord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fordicon2"/>
+
+    <Button
+        android:id="@+id/btnDadosGetData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dados Coletados"
+        android:layout_below="@+id/imgFord"/>
+
+
+    <Button
+        android:id="@+id/btnLimparLista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Limpar Dados"
+        android:layout_below="@+id/btnDadosGetData"/>
+
+
 
 
 

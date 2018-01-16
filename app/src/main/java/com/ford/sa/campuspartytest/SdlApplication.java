@@ -40,6 +40,10 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -175,7 +179,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 public void onGetVehicleDataResponse(Context ctx, GetVehicleDataResponse response) {
                     HMIScreenManager.getInstance().newShow.setMainField3("Data Collected!");
                     HMIScreenManager.getInstance().mostrarTela();
-                    CurrentHMIState.dataCollectionActive = false;
+                    //CurrentHMIState.dataCollectionActive = false;
 
                     String texto = " - Vin: " + response.getVin();
 
@@ -188,6 +192,15 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                         e.getStackTrace();
                     }
 
+                    CarData obj = new CarData();
+                    obj.processVehicleData(response);
+
+                    Shared.getInstance().ListCarDataSort("asc");
+                    Shared.getInstance().setListCarData(obj);
+                    Shared.getInstance().ListCarDataSort("desc");
+
+
+                    CarData.getInstance().processVehicleData(response);
 
                     //sendLockScreenMsg(cont + texto);
 
@@ -208,37 +221,23 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 @Override
                 public void onVehicleData(OnVehicleData notification) {
 
-
+                    for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)notification.getStore().get("notification") ).entrySet() ) {
+                        if (obj.getKey().equals("parameters")) {
+                            for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
+                                HMIScreenManager.getInstance().newShow.setMainField3(item.getKey() + " : " + item.getValue() );
+                            }
+                        }
+                    }
 
                     CarData.getInstance().processVehicleSubscribe(notification);
-
-
-                    if (notification.getParameters("fuelLevel") != null) {
-                        HMIScreenManager.getInstance().newShow.setMainField3("FuelLevel: " + notification.getParameters("fuelLevel").toString() );
-                        //lockScreen.setTxtView("FuelLevel: " + notification.getParameters("fuelLevel").toString());
-
-
-                        txtConteudo.setText("FuelLevel: " + notification.getParameters("fuelLevel").toString());
-
-
-                    }
-
-                    if (notification.getParameters("speed") != null) {
-                        HMIScreenManager.getInstance().newShow.setMainField3("speed: " + notification.getParameters("speed").toString() );
-                        //lockScreen.setTxtView("speed: " + notification.getParameters("speed").toString());
-                        txtConteudo.setText("speed: " + notification.getParameters("speed").toString());
-
-                    }
-
-                    if (notification.getParameters("prndl") != null) {
-                        HMIScreenManager.getInstance().newShow.setMainField3("PRNDL: " + notification.getParameters("prndl").toString() );
-                        //lockScreen.setTxtView("PRNDL: " + notification.getParameters("prndl").toString());
-                        txtConteudo.setText("PRNDL: " + notification.getParameters("prndl").toString());
-                    }
-
                     HMIScreenManager.getInstance().mostrarTela();
 
+                    CarData obj = new CarData();
+                    obj.newCarDataSubscribe();
 
+                    Shared.getInstance().ListCarDataSort("asc");
+                    Shared.getInstance().setListCarData(obj);
+                    Shared.getInstance().ListCarDataSort("desc");
 
 
                 }
@@ -290,6 +289,8 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                         case 2:
 
                             CurrentHMIState.dataCollectionActive = true;
+                            TelematicsCollector.getInstance().setGetInit();
+
                             TelematicsCollector.getInstance().setSubscribeVehicleData();
 
                             HMIScreenManager.getInstance().setNewShow();
@@ -386,11 +387,11 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                 public void onCreate(Activity activity, Bundle bundle) {
 
                     try {
-                        activity.setContentView(R.layout.activity_lock_screen_new);
-                        txtConteudo =  (TextView) activity.findViewById(R.id.txtConteudo);
+                        //activity.setContentView(R.layout.activity_lock_screen_new);
+                        //txtConteudo =  (TextView) activity.findViewById(R.id.txtConteudo);
 
 
-                        txtConteudo.setText("Bruno testando....");
+                        //txtConteudo.setText("Bruno testando....");
 
                     } catch (Exception e) {
                         e.getStackTrace();

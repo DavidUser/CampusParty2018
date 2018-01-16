@@ -1,5 +1,7 @@
 package com.ford.sa.campuspartytest;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,9 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private Context CONTEXT;
+    private Button btnDadosGetData, btnLimparDados;
 
 
 
@@ -21,14 +31,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+
+        getSupportActionBar().setTitle("Campus Party");
+
+        CONTEXT = this;
+
+
+        btnDadosGetData = (Button) findViewById(R.id.btnDadosGetData);
+
+        btnDadosGetData.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View v) {
+                Intent i = new Intent(CONTEXT, DetailInfoAct.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                CONTEXT.startActivity(i);
             }
         });
+
+
+        btnLimparDados = (Button) findViewById(R.id.btnLimparLista);
+        btnLimparDados.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Shared.getInstance().ListCarData = new ArrayList<>();
+                Toast.makeText(getApplicationContext(), "Dados Coletados Apagados", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
     @Override
