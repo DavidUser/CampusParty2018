@@ -316,7 +316,9 @@ public class CarData {
                 for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
                     Log.d("BRUNO TESTE", "BRUNO TESTE - " + item.getKey() + " : " + item.getValue().toString());
                     if (item.getKey().equals("tirePressure")) {
-                        //TODO Verificar os dados do tirePressure
+                        for ( HashMap.Entry<String, Object> objTirePressute : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
+                            setItem(item.getKey().toString(), ((Hashtable<String, Object>)objTirePressute.getValue()).get("status").toString() );
+                        }
                     }
                     else if (item.getKey().equals("bodyInformation")) {
                         setItemSubItem((Hashtable<String, Object>)item.getValue());
