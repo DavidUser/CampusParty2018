@@ -44,6 +44,7 @@ public class CarData implements Serializable{
     private String odometer = " -- ";
     private String driverBreaking = " -- ";
 
+
     private long timestamp;
 
     /* headLampStatus */
