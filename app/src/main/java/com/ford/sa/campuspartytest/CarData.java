@@ -336,7 +336,10 @@ public class CarData implements Serializable{
 
     public void setPassengreDoorAjar(String passengreDoorAjar) {
         this.passengreDoorAjar = passengreDoorAjar;
+
+
     }
+
 
     public String getIgnitionStatus() {
         return ignitionStatus;
