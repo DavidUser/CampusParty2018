@@ -1,5 +1,6 @@
 package com.ford.sa.campuspartytest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.View;
 import com.ford.sa.campuspartytest.adapters.GetDataAdapter;
 import com.ford.sa.campuspartytest.interfaces.RecyclerViewOnClickListenerHack;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +40,7 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Dados Coletados");
+        getSupportActionBar().setTitle("Collected Data");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -123,6 +125,16 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
     @Override
     public void onClickListener(View view, int position) {
 
+        Intent it = new Intent(getApplication(), ItemDetailAct.class);
+        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable("CarData", (Serializable) Shared.getInstance().getListCarData().get(position));
+        it.putExtras(mBundle);
+
+        //it.putExtra("idContrato", listaContratos.get(position).getId());
+        startActivity(it);
+
     }
 
     @Override
@@ -135,7 +147,7 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
     @Override
     protected void onResume() {
         Log.d("BRUNO TESTE", "ON RESUME - BRUNO TESTE");
-        mAdapter.notifyItemInserted(Shared.getInstance().getListCarData().size() - 1);
+        //mAdapter.notifyItemInserted(Shared.getInstance().getListCarData().size() - 1);
         //mAdapter.notifyDataSetChanged();
         super.onResume();
     }

@@ -47,20 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 CONTEXT.startActivity(i);
             }
         });
-
-
-        btnLimparDados = (Button) findViewById(R.id.btnLimparLista);
-        btnLimparDados.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Shared.getInstance().ListCarData = new ArrayList<>();
-                Toast.makeText(getApplicationContext(), "Dados Coletados Apagados", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-
     }
 
     @Override
@@ -78,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_clear) {
+            Shared.getInstance().ListCarData = new ArrayList<>();
+            Toast.makeText(getApplicationContext(), "Dados Coletados Apagados", Toast.LENGTH_SHORT).show();
             return true;
         }
 

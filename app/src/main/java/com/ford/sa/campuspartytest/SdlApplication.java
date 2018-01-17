@@ -61,7 +61,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
     SoftButton btnSubsData = new SoftButton();
     SoftButton btnStopSub = new SoftButton();
 
-    static TextView txtConteudo;
+    //static TextView txtConteudo;
 
     private SdlApplication INSTANCE;
 
@@ -186,8 +186,8 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     cont = cont+1;
 
                     try {
-                        txtConteudo.setText(cont + texto);
-                        LockScreenActivity.recreateAct();
+                        //txtConteudo.setText(cont + texto);
+                       // LockScreenActivity.recreateAct();
                     } catch(Exception e) {
                         e.getStackTrace();
                     }
@@ -281,7 +281,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
                                 HMIScreenManager.getInstance().mostrarTela();
 
-                                txtConteudo.setText("Get Data init...");
+                                //txtConteudo.setText("Get Data init...");
 
                             }
 

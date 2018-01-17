@@ -123,9 +123,9 @@ public class GetDataAdapter extends RecyclerView.Adapter<GetDataAdapter.GetDataV
 
         @Override
         public void onClick(View v) {
-            //if(mRecyclerViewOnClickListenerHack != null){
-             //   mRecyclerViewOnClickListenerHack.onClickListener(v, getPosition());
-            //}
+            if(mRecyclerViewOnClickListenerHack != null){
+                mRecyclerViewOnClickListenerHack.onClickListener(v, getPosition());
+            }
         }
     }
 

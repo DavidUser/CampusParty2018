@@ -5,6 +5,7 @@ import android.util.Log;
 import com.smartdevicelink.proxy.rpc.GetVehicleDataResponse;
 import com.smartdevicelink.proxy.rpc.OnVehicleData;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,68 +18,107 @@ import java.util.Map;
  * Created by bgarci67 on 1/5/18.
  */
 
-public class CarData {
+public class CarData implements Serializable{
 
+
+
+    /* Singleton */
     private static CarData INSTANCE;
-
     public static CarData getInstance() {
         if (INSTANCE == null)
             INSTANCE = new CarData();
         return INSTANCE;
     }
 
+
+    /* All Attributes */
     public String[] VehicleParams = {"vin","fuelLevel_State", "tirePressure", "prndl", "fuelLevel", "speed","externalTemperature","rpm", "engineTorque", "odometer","driverBreaking","headLampStatus","gps","tirePressure"};
-
-    private String vin;
-    private String fuelLevel_State;
-    private String prndl;
-    private String fuelLevel;
-    private String speed;
-    private String externalTemperature;
-    private String rpm;
-    private String engineTorque;
-    private String odometer;
-    private String driverBreaking;
-
-    /* headLampStatus */
-    public String[] headLampParams = {"lowBeamsOn","ambientLightSensorStatus","highBeamsOn"};
-    private String lowBeamsOn;
-    private String ambientLightSensorStatus;
-    private String highBeamsOn;
-
-    /* GPS */
-    //TODO Criar as variaveis do GPS
-
-
-    /* tirePressure */
-    public String[] tirePressureParams = {"rightRear","pressureTelltale","innerLeftRear","rightFront","innerRightRear","leftRear","leftFront"};
-    private String rightRear;
-    private String pressureTelltale;
-    private String innerLeftRear;
-    private String rightFront;
-    private String innerRightRear;
-    private String leftRear;
-    private String leftFront;
-
-    /* bodyInformation */
-    public String[] bodyInformationParams = {"rearLeftDoorAjar","parkBreakeActive","driverDoorAjar","rearRightDoorAjar","ignitionStableStatus","passengreDoorAjar","ignitionStatus"};
-    private String rearLeftDoorAjar;
-    private String parkBreakeActive;
-    private String driverDoorAjar;
-    private String rearRightDoorAjar;
-    private String ignitionStableStatus;
-    private String passengreDoorAjar;
-    private String ignitionStatus;
-
-
-
-
-
+    private String vin = " -- ";
+    private String fuelLevel_State= " -- ";
+    private String prndl = " -- ";
+    private String fuelLevel = " -- ";
+    private String speed = " -- ";
+    private String externalTemperature = " -- ";
+    private String rpm = " -- ";
+    private String engineTorque = " -- ";
+    private String odometer = " -- ";
+    private String driverBreaking = " -- ";
 
     private long timestamp;
 
-    public CarData() {
+    /* headLampStatus */
+    public String[] headLampParams = {"lowBeamsOn","ambientLightSensorStatus","highBeamsOn"};
+    private String lowBeamsOn = " -- ";
+    private String ambientLightSensorStatus = "";
+    private String highBeamsOn = " -- ";
 
+    /* GPS */
+    public String[] gpsParams = {"latitudeDegrees","longitudeDegrees","altitude","heading","compassDirection"};
+    private String latitudeDegrees = " -- ";
+    private String longitudeDegrees = " -- ";
+    private String altitude = " -- ";
+    private String heading = " -- ";
+    private String compassDirection = " -- ";
+
+    /* tirePressure */
+    public String[] tirePressureParams = {"rightRear","pressureTelltale","innerLeftRear","rightFront","innerRightRear","leftRear","leftFront"};
+    private String rightRear = " -- ";
+    private String pressureTelltale = " -- ";
+    private String innerLeftRear = " -- ";
+    private String rightFront = " -- ";
+    private String innerRightRear = " -- ";
+    private String leftRear = " -- ";
+    private String leftFront = " -- ";
+
+    /* bodyInformation */
+    public String[] bodyInformationParams = {"rearLeftDoorAjar","parkBreakeActive","driverDoorAjar","rearRightDoorAjar","ignitionStableStatus","passengreDoorAjar","ignitionStatus"};
+    private String rearLeftDoorAjar = " -- ";
+    private String parkBreakeActive = " -- ";
+    private String driverDoorAjar = " -- ";
+    private String rearRightDoorAjar = " -- ";
+    private String ignitionStableStatus = " -- ";
+    private String passengreDoorAjar = " -- ";
+    private String ignitionStatus = " -- ";
+
+    /* Getters & Setters */
+    public String getLatitudeDegrees() {
+        return latitudeDegrees;
+    }
+
+    public void setLatitudeDegrees(String latitudeDegrees) {
+        this.latitudeDegrees = latitudeDegrees;
+    }
+
+    public String getLongitudeDegrees() {
+        return longitudeDegrees;
+    }
+
+    public void setLongitudeDegrees(String longitudeDegrees) {
+        this.longitudeDegrees = longitudeDegrees;
+    }
+
+    public String getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(String altitude) {
+        this.altitude = altitude;
+    }
+
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    public String getCompassDirection() {
+        return compassDirection;
+    }
+
+    public void setCompassDirection(String compassDirection) {
+        this.compassDirection = compassDirection;
     }
 
     public long getTimestamp() {
@@ -305,19 +345,20 @@ public class CarData {
         this.ignitionStatus = ignitionStatus;
     }
 
-
-
-
-
+    /* GET DATA */
     public void processVehicleData(GetVehicleDataResponse notification) {
 
         for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)notification.getStore().get("response") ).entrySet() ) {
             if (obj.getKey().equals("parameters")) {
                 for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
-                    Log.d("BRUNO TESTE", "BRUNO TESTE - " + item.getKey() + " : " + item.getValue().toString());
                     if (item.getKey().equals("tirePressure")) {
                         for ( HashMap.Entry<String, Object> objTirePressute : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
-                            setItem(item.getKey().toString(), ((Hashtable<String, Object>)objTirePressute.getValue()).get("status").toString() );
+                            if (objTirePressute.getValue().getClass() == "".getClass()){
+                                setItem(objTirePressute.getKey(), objTirePressute.getValue().toString());
+                            }
+                            else {
+                                setItem(item.getKey().toString(), ((Hashtable<String, Object>)objTirePressute.getValue()).get("status").toString() );
+                            }
                         }
                     }
                     else if (item.getKey().equals("bodyInformation")) {
@@ -327,7 +368,7 @@ public class CarData {
                         setItemSubItem((Hashtable<String, Object>)item.getValue());
                     }
                     else if (item.getKey().equals("gps")) {
-                        //TODO Verificar os dados do GPS
+                        setItemSubItem((Hashtable<String, Object>)item.getValue());
                     }
                     else {
                         setItem(item.getKey(), item.getValue().toString());
@@ -335,24 +376,58 @@ public class CarData {
                 }
             }
         }
-        /*for (String obj : VehicleParams) {
-            if (notification.getParameters(obj) != null) {
-                setItem(obj, notification.getParameters(obj).toString());
-            }
-        }*/
 
         setTimestamp(System.currentTimeMillis());
     }
 
+    /* SUBSCRIBE */
+    public void processVehicleSubscribe(OnVehicleData responseSubs){
+        for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)responseSubs.getStore().get("notification") ).entrySet() ) {
+            if (obj.getKey().equals("parameters")) {
+                for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
+                    if (item.getKey().equals("tirePressure")) {
+                        for ( HashMap.Entry<String, Object> objTirePressute : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
+                            if (objTirePressute.getValue().getClass() == "".getClass()){
+                                setItem(objTirePressute.getKey(), objTirePressute.getValue().toString());
+                            }
+                            else {
+                                setItem(item.getKey().toString(), ((Hashtable<String, Object>)objTirePressute.getValue()).get("status").toString() );
+                            }
+                        }
+                    }
+                    else if (item.getKey().equals("bodyInformation")) {
+                        setItemSubItem((Hashtable<String, Object>)item.getValue());
+                    }
+                    else if (item.getKey().equals("headLampStatus")) {
+                        setItemSubItem((Hashtable<String, Object>)item.getValue());
+                    }
+                    else if (item.getKey().equals("gps")) {
+                        setItemSubItem((Hashtable<String, Object>)item.getValue());
+                    }
+                    else {
+                        setItem(item.getKey(), item.getValue().toString());
+                    }
+                }
+            }
+        }
+    }
+
+    /* process Hasmap to get sub-itens */
     public void setItemSubItem(Hashtable<String, Object> item) {
         for (HashMap.Entry<String, Object> obj : item.entrySet() ){
             setItem(obj.getKey(), obj.getValue().toString());
         }
     }
 
-
+    /* set attributes by string name */
     public void setItem(String item, String valor) {
+
+        valor = valor == null ? " -- " : valor;
+
         switch (item){
+            case "vin":
+                setVin(valor);
+                break;
             case "fuelLevel_State":
                 setFuelLevel_State(valor);
                 break;
@@ -410,136 +485,138 @@ public class CarData {
             case "ignitionStableStatus":
                 setIgnitionStableStatus(valor);
                 break;
-            //TODO incluir o case para os TirePressure e GPS
+            case "latitudeDegrees":
+                setLatitudeDegrees(valor);
+                break;
+            case "longitudeDegrees":
+                setLongitudeDegrees(valor);
+                break;
+            case "altitude":
+                setAltitude(valor);
+                break;
+            case "heading":
+                setHeading(valor);
+                break;
+            case "compassDirection":
+                setCompassDirection(valor);
+                break;
+            case "rightRear":
+                setRightRear(valor);
+                break;
+            case "pressureTelltale":
+                setPressureTelltale(valor);
+                break;
+            case "innerLeftRear":
+                setInnerLeftRear(valor);
+                break;
+            case "rightFront":
+                setRightFront(valor);
+                break;
+            case "innerRightRear":
+                setInnerRightRear(valor);
+                break;
+            case "leftRear":
+                setLeftRear(valor);
+                break;
+            case "leftFront":
+                setLeftFront(valor);
+                break;
         }
     }
 
-    public void processVehicleSubscribe(OnVehicleData responseSubs){
-        for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)responseSubs.getStore().get("notification") ).entrySet() ) {
-            if (obj.getKey().equals("parameters")) {
-                for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
-                    Log.d("BRUNO TESTE", "BRUNO TESTE - " + item.getKey() + " : " + item.getValue().toString());
-                    if (item.getKey().equals("tirePressure")) {
-
-                    }
-                    else if (item.getKey().equals("bodyInformation")) {
-                        setItemSubItem((Hashtable<String, Object>)item.getValue());
-                    }
-                    else if (item.getKey().equals("headLampStatus")) {
-                        setItemSubItem((Hashtable<String, Object>)item.getValue());
-                    }
-                    else if (item.getKey().equals("gps")) {
-
-                    }
-                    else {
-                        setItem(item.getKey(), item.getValue().toString());
-                    }
-                }
-            }
+    /* get attributes by string name */
+    public String getItem(String item) {
+        switch (item){
+            case "vin":
+                return getVin();
+            case "fuelLevel_State":
+                return getFuelLevel_State();
+            case "prndl":
+                return getPrndl();
+            case "fuelLevel":
+                return getFuelLevel();
+            case "speed":
+                return getSpeed();
+            case "externalTemperature":
+                return getExternalTemperature();
+            case "rpm":
+                return getRpm();
+            case "driverBraking":
+                return getDriverBreaking();
+            case "engineTorque":
+                return getEngineTorque();
+            case "odometer":
+                return getOdometer();
+            case "lowBeamsOn":
+                return getLowBeamsOn();
+            case "highBeamsOn":
+                return getHighBeamsOn();
+            case "ambientLightSensorStatus":
+                return getAmbientLightSensorStatus();
+            case "rearLeftDoorAjar":
+                return  getRearLeftDoorAjar();
+            case "rearRightDoorAjar":
+                return getRearRightDoorAjar();
+            case "ignitionStatus":
+                return getIgnitionStatus();
+            case "driverDoorAjar":
+                return  getDriverDoorAjar();
+            case "parkBrakeActive":
+                return  getParkBreakeActive();
+            case "passengerDoorAjar":
+                return getPassengreDoorAjar();
+            case "ignitionStableStatus":
+                return getIgnitionStableStatus();
+            case "latitudeDegrees":
+                return getLatitudeDegrees();
+            case "longitudeDegrees":
+                return getLongitudeDegrees();
+            case "altitude":
+                return getAltitude();
+            case "heading":
+                return getHeading();
+            case "compassDirection":
+                return getCompassDirection();
+            case "rightRear":
+                return getRightRear();
+            case "pressureTelltale":
+                return getPressureTelltale();
+            case "innerLeftRear":
+                return getInnerLeftRear();
+            case "rightFront":
+                return getRightFront();
+            case "innerRightRear":
+                return getInnerRightRear();
+            case "leftRear":
+                return getLeftRear();
+            case "leftFront":
+                return getLeftFront();
+            default:
+                return "";
         }
     }
 
+    /* set attributes from Static CarData Instance (used in Subscribe only) */
     public void newCarDataSubscribe(){
         for (String obj : VehicleParams) {
-            switch (obj){
-                case "fuelLevel_State":
-                    setFuelLevel_State(CarData.getInstance().getFuelLevel_State());
-                    break;
-                case "prndl":
-                    setPrndl(CarData.getInstance().getPrndl());
-                    break;
-                case "fuelLevel":
-                    setFuelLevel(CarData.getInstance().getFuelLevel());
-                    break;
-                case "speed":
-                    setSpeed(CarData.getInstance().getSpeed());
-                    break;
-                case "externalTemperature":
-                    setExternalTemperature(CarData.getInstance().getExternalTemperature());
-                    break;
-                case "rpm":
-                    setRpm(CarData.getInstance().getRpm());
-                    break;
-                case "driverBraking":
-                    setDriverBreaking(CarData.getInstance().getDriverBreaking());
-                    break;
-                case "engineTorque":
-                    setEngineTorque(CarData.getInstance().getEngineTorque());
-                    break;
-                case "odometer":
-                    setOdometer(CarData.getInstance().getOdometer());
-                    break;
-            }
+            setItem(obj, CarData.INSTANCE.getItem(obj));
         }
 
         for (String obj : tirePressureParams) {
-            switch (obj){
-                case "rightRear":
-                    setRightRear(CarData.getInstance().getRightRear());
-                    break;
-                case "pressureTelltale":
-                    setPressureTelltale(CarData.getInstance().getPressureTelltale());
-                    break;
-                case "innerLeftRear":
-                    setInnerLeftRear(CarData.getInstance().getInnerLeftRear());
-                    break;
-                case "rightFront":
-                    setRightFront(CarData.getInstance().getRightFront());
-                    break;
-                case "innerRightRear":
-                    setInnerRightRear(CarData.getInstance().getInnerRightRear());
-                    break;
-                case "leftRear":
-                    setLeftRear(CarData.getInstance().getLeftRear());
-                    break;
-                case "leftFront":
-                    setLeftFront(CarData.getInstance().getLeftFront());
-                    break;
-            }
+            setItem(obj, CarData.INSTANCE.getItem(obj));
         }
 
         for (String obj : bodyInformationParams) {
-            switch (obj){
-                case "rearLeftDoorAjar":
-                    setRearLeftDoorAjar(CarData.getInstance().getRearLeftDoorAjar());
-                    break;
-                case "parkBreakeActive":
-                    setParkBreakeActive(CarData.getInstance().getParkBreakeActive());
-                    break;
-                case "driverDoorAjar":
-                    setDriverDoorAjar(CarData.getInstance().getDriverDoorAjar());
-                    break;
-                case "rearRightDoorAjar":
-                    setRearRightDoorAjar(CarData.getInstance().getRearRightDoorAjar());
-                    break;
-                case "ignitionStableStatus":
-                    setIgnitionStableStatus(CarData.getInstance().getIgnitionStableStatus());
-                    break;
-                case "passengreDoorAjar":
-                    setPassengreDoorAjar(CarData.getInstance().getPassengreDoorAjar());
-                    break;
-                case "ignitionStatus":
-                    setIgnitionStatus(CarData.getInstance().getIgnitionStatus());
-                    break;
-
-            }
+            setItem(obj, CarData.INSTANCE.getItem(obj));
         }
 
         for (String obj : headLampParams) {
-            switch (obj){
-                case "lowBeamsOn":
-                    setLowBeamsOn(CarData.getInstance().getLowBeamsOn());
-                    break;
-                case "ambientLightSensorStatus":
-                    setAmbientLightSensorStatus(CarData.getInstance().getAmbientLightSensorStatus());
-                    break;
-                case "highBeamsOn":
-                    setHighBeamsOn(CarData.getInstance().getHighBeamsOn());
-                    break;
-            }
+            setItem(obj, CarData.INSTANCE.getItem(obj));
         }
 
-        //TODO forEach do GPS
+        for (String obj : gpsParams) {
+            setItem(obj, CarData.INSTANCE.getItem(obj));
+        }
 
         setTimestamp(System.currentTimeMillis());
     }

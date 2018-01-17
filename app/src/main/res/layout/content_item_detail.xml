@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="16dp"
+                android:layout_marginRight="16dp"
                 android:text="99/99/9999"/>
 
 
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_below="@+id/txtDt"
-                android:padding="16dp">
+                android:padding="8dp">
 
                 <TextView
                     android:id="@+id/txtVin"
@@ -129,26 +129,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_below="@id/txtGps">
 
                 <TextView
-                    android:id="@+id/txtGps1"
+                    android:id="@+id/txtLatitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GPS 1: "/>
+                    android:text="Latitude: "/>
 
                 <TextView
-                    android:id="@+id/txtGps2"
+                    android:id="@+id/txtLongitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GPS 2: "/>
+                    android:text="Longitude: "/>
 
                 <TextView
-                    android:id="@+id/txtGps3"
+                    android:id="@+id/txtAltitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GPS 3: "/>
+                    android:text="Altitude: "/>
+                <TextView
+                    android:id="@+id/txtHeading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Heading: "/>
+
+                <TextView
+                    android:id="@+id/txtCompassDirection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Compass Direction: "/>
             </LinearLayout>
 
 
@@ -175,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_below="@id/txtHeadLampStatus">
 
                 <TextView
@@ -220,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_below="@id/txtTirePressure">
 
                 <TextView
@@ -290,7 +301,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:layout_below="@id/txtBodyInformation">
 
                 <TextView
