@@ -4,23 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ford.sa.campuspartytest.MainActivity"
     tools:showIn="@layout/activity_main">
 
 
+
     <ImageView
-        android:id="@+id/imgFord"
+        android:id="@+id/imgCampusParty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/fordicon2"/>
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/campusparty"/>
+
+
+
 
     <Button
         android:id="@+id/btnDadosGetData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Collected Data"
-        android:layout_below="@+id/imgFord"/>
+        android:layout_centerInParent="true"
+        android:textColor="@color/md_white_1000"
+        android:background="@color/md_blue_500"
+        android:text="Collected Data List"/>
+
+
+
+
+
+    <ImageView
+        android:id="@+id/imgFord"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/fordicon"/>
+
 
 
 

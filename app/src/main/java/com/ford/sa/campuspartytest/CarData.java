@@ -340,7 +340,6 @@ public class CarData implements Serializable{
 
     }
 
-
     public String getIgnitionStatus() {
         return ignitionStatus;
     }
@@ -389,12 +388,6 @@ public class CarData implements Serializable{
         for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)responseSubs.getStore().get("notification") ).entrySet() ) {
             if (obj.getKey().equals("parameters")) {
                 for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
-
-                    if (item.getKey().equals("speed")) {
-                        System.out.print("teste");
-                    }
-
-
                     if (item.getKey().equals("tirePressure")) {
                         for ( HashMap.Entry<String, Object> objTirePressute : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
                             if (objTirePressute.getValue().getClass() == "".getClass()){

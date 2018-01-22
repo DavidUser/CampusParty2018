@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         CONTEXT = this;
 
-
         btnDadosGetData = (Button) findViewById(R.id.btnDadosGetData);
 
         btnDadosGetData.setOnClickListener(new View.OnClickListener() {

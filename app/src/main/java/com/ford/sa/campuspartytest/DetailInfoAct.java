@@ -40,7 +40,7 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Collected Data");
+        getSupportActionBar().setTitle("Collected Data List");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -148,7 +148,7 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
     protected void onResume() {
         Log.d("BRUNO TESTE", "ON RESUME - BRUNO TESTE");
         //mAdapter.notifyItemInserted(Shared.getInstance().getListCarData().size() - 1);
-        //mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
         super.onResume();
     }
 }

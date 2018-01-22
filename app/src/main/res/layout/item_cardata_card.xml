@@ -130,16 +130,52 @@
             android:layout_toRightOf="@+id/lblPrndl"
             android:layout_below="@+id/div4"/>
 
+        <View
+            android:id="@+id/div5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_below="@+id/txtPrndl"
+            android:layout_margin="5dp"
+            />
+
+
+        <net.steamcrafted.materialiconlib.MaterialIconView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:materialIcon="arrow_right"
+            app:materialIconColor="#000"
+            app:materialIconSize="24dp"
+            android:scaleType="center"
+            android:id="@+id/icon"
+            android:layout_below="@+id/div5"
+            android:layout_alignParentEnd="true"
+        />
+
+
+
+
+        <TextView
+            android:id="@+id/txtMoreInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_black_1000"
+            android:textSize="10sp"
+            android:text="@string/more_info"
+            android:layout_marginTop="6dp"
+            android:layout_toLeftOf="@id/icon"
+            android:layout_below="@+id/div5"/>
+
 
         <TextView
             android:id="@+id/txtDt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="6dp"
             android:textSize="10sp"
-            android:text="fhjkfdhkjla54564"
-            android:layout_margin="5dp"
-            android:layout_below="@+id/txtPrndl"/>
+            android:text="99/99/9999"
+            android:layout_below="@id/div5"
+            />
 
 
 

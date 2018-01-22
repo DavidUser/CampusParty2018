@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+
+
 import com.ford.sa.interfacesdl.Config;
 import com.ford.sa.interfacesdl.LockScreenActivity;
 import com.ford.sa.interfacesdl.hmi.CurrentHMIState;
@@ -54,22 +56,10 @@ import java.util.Vector;
 
 public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
-
-    int cont = 0;
     Vector<SoftButton> softButtons = new Vector<SoftButton>();
     SoftButton btnGetData = new SoftButton();
     SoftButton btnSubsData = new SoftButton();
     SoftButton btnStopSub = new SoftButton();
-
-    //static TextView txtConteudo;
-
-    private SdlApplication INSTANCE;
-
-    //LockScreenAct lockScreen;
-
-    public SdlApplication() {
-        this.INSTANCE = this;
-    }
 
     @Override
     public void onCreate() {
@@ -101,8 +91,6 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     btnGetData.setIsHighlighted(false);
                     softButtons.add(btnGetData);
 
-
-
                     btnSubsData.setSoftButtonID(2);
                     btnSubsData.setType(SoftButtonType.SBT_BOTH);
                     Image imgSubsData = new Image();
@@ -112,22 +100,8 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     btnSubsData.setText("Subs");
                     softButtons.add(btnSubsData);
 
-
-                    btnStopSub.setSoftButtonID(3);
-                    btnStopSub.setType(SoftButtonType.SBT_BOTH);
-                    Image newImg3 = new Image();
-                    newImg3.setValue("stop.png");
-                    newImg3.setImageType(ImageType.DYNAMIC);
-                    btnStopSub.setImage(newImg3);
-                    btnStopSub.setText("Stop");
-                    //softButtons.add(btnStopSub);
-
                     HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
-
                     HMIScreenManager.getInstance().mostrarTela();
-
-                    //ClearCache threadCache = new ClearCache(INSTANCE);
-                    //threadCache.run();
                 }
             };
 
@@ -138,11 +112,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
             ServiceListeners.getInstance().listenerHMIStatus = new ServiceListeners.ListenerHMIStatus() {
                 @Override
                 public void onHMIFull(OnHMIStatus notification) {
-
-
-                    /**
-                     * Upload images
-                     */
+                    /** Upload images */
                     ArrayList<ServiceListeners.SdlImage> listaImagens = new ArrayList<>();
                     listaImagens.add(new ServiceListeners.SdlImage("send.png",R.drawable.send));
                     listaImagens.add(new ServiceListeners.SdlImage("start.png",R.drawable.start));
@@ -150,29 +120,23 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     listaImagens.add(new ServiceListeners.SdlImage("diag.png",R.drawable.diag));
                     Config.instance.uploadListImages(listaImagens);
 
-
                     ServiceListeners.getInstance().listenerScreen.showWelcomeScreen();
                 }
 
                 @Override
-                public void onHMIBackground(OnHMIStatus notification) {
-
-                }
+                public void onHMIBackground(OnHMIStatus notification) { }
 
                 @Override
-                public void onHMINone(OnHMIStatus notification) {
-
-                }
+                public void onHMINone(OnHMIStatus notification) { }
 
                 @Override
-                public void onHMILimited(OnHMIStatus notification) {
-
-                }
+                public void onHMILimited(OnHMIStatus notification) { }
             };
 
             ////------------------------------------------------------------------------------------------
             /**
              * Get Data Listener
+             *
              */
             ServiceListeners.getInstance().listenerGetData = new ServiceListeners.ListenerGetData() {
                 @Override
@@ -181,17 +145,6 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     HMIScreenManager.getInstance().mostrarTela();
                     //CurrentHMIState.dataCollectionActive = false;
 
-                    String texto = " - Vin: " + response.getVin();
-
-                    cont = cont+1;
-
-                    try {
-                        //txtConteudo.setText(cont + texto);
-                       // LockScreenActivity.recreateAct();
-                    } catch(Exception e) {
-                        e.getStackTrace();
-                    }
-
                     CarData obj = new CarData();
                     obj.processVehicleData(response);
 
@@ -199,15 +152,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     Shared.getInstance().setListCarData(obj);
                     Shared.getInstance().ListCarDataSort("desc");
 
-
                     CarData.getInstance().processVehicleData(response);
-
-                    //sendLockScreenMsg(cont + texto);
-
-
-
-                    //lockScreen.setTxtView(cont + " - Data Collected!!\n\n\n" + texto );
-
                 }
             };
 
@@ -218,6 +163,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
              * Subscribe Data Listener
              */
             ServiceListeners.getInstance().listenerSubscribeData = new ServiceListeners.ListenerSubscribeData() {
+
                 @Override
                 public void onVehicleData(OnVehicleData notification) {
 
@@ -238,9 +184,8 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                     Shared.getInstance().ListCarDataSort("asc");
                     Shared.getInstance().setListCarData(obj);
                     Shared.getInstance().ListCarDataSort("desc");
-
-
                 }
+
             };
 
             ////------------------------------------------------------------------------------------------
@@ -249,28 +194,21 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
              */
             ServiceListeners.getInstance().listenerOnCommand = new ServiceListeners.ListenerOnCommand() {
                 @Override
-                public void onCommand(OnCommand notification) {
-
-                }
+                public void onCommand(OnCommand notification) { }
 
                 @Override
-                public void onAddCommandResponse(AddCommandResponse response) {
-
-                }
+                public void onAddCommandResponse(AddCommandResponse response) { }
 
                 @Override
-                public void onAddSubMenuResponse(AddSubMenuResponse addSubMenuResponse) {
-
-                }
+                public void onAddSubMenuResponse(AddSubMenuResponse addSubMenuResponse) { }
 
                 @Override
                 public void onOnButtonPress(OnButtonPress notification) {
 
-
-
                     switch (notification.getCustomButtonName()){
-                        case 1:
+                        case 1: //Button GETDATA Clicked
 
+                            //button locked when subscribe is active
                             if (!btnGetData.getIsHighlighted()) {
                                 CurrentHMIState.dataCollectionActive = true;
                                 TelematicsCollector.getInstance().setGetInit();
@@ -278,15 +216,11 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                                 HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
                                 HMIScreenManager.getInstance().newShow.setMainField2("Getting Car Data");
                                 HMIScreenManager.getInstance().newShow.setMainField3("Data colleting...");
-
                                 HMIScreenManager.getInstance().mostrarTela();
-
-                                //txtConteudo.setText("Get Data init...");
-
                             }
 
                             break;
-                        case 2:
+                        case 2: //Button SUBSCRIBE Clicked
 
                             CurrentHMIState.dataCollectionActive = true;
                             TelematicsCollector.getInstance().setGetInit();
@@ -294,11 +228,7 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                             TelematicsCollector.getInstance().setSubscribeVehicleData();
 
                             HMIScreenManager.getInstance().setNewShow();
-
-
                             HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.TEXT_AND_SOFTBUTTONS_WITH_GRAPHIC );
-
-
                             HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
                             HMIScreenManager.getInstance().newShow.setMainField2("Subscribing Car Data");
                             HMIScreenManager.getInstance().newShow.setMainField3("Data colleting...");
@@ -310,20 +240,16 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
 
                             HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
                             HMIScreenManager.getInstance().mostrarTela();
-
                             break;
-                        case 3:
-
+                        case 3: //Button STOP SUBSCRIBE Clicked
 
                             TelematicsCollector.getInstance().setUnsubscribeVehicleData();
                             HMIScreenManager.getInstance().setNewShow();
                             HMIScreenManager.getInstance().setShowLayout(EnumDisplayLayout.TEXT_AND_SOFTBUTTONS_WITH_GRAPHIC);
 
-
                             HMIScreenManager.getInstance().newShow.setMainField1("Hello New Campus Party");
                             HMIScreenManager.getInstance().newShow.setMainField2("Subscribing Car Data");
                             HMIScreenManager.getInstance().newShow.setMainField3("Subscribe Stoped");
-
 
                             softButtons.clear();
                             btnGetData.setIsHighlighted(false);
@@ -331,218 +257,50 @@ public class SdlApplication extends com.ford.sa.interfacesdl.SdlApplication {
                             softButtons.add(btnSubsData);
 
                             HMIScreenManager.getInstance().newShow.setSoftButtons(softButtons);
-
                             HMIScreenManager.getInstance().mostrarTela();
-
                             CurrentHMIState.dataCollectionActive = false;
-
-
                             break;
-
                     }
-
-
-                    //HMIScreenManager.getInstance().newShow.setMainField3("Botão "+ notification.getCustomButtonName()  +" pressionado");
-                    //HMIScreenManager.getInstance().mostrarTela();
-                    //Log.d("TESTE","TESTE BRUNO");
-
-
                 }
             };
-
-
-
 
 
             ServiceListeners.getInstance().listenerLockScreenEvents = new ServiceListeners.ListenerLockScreenEvents() {
                 @Override
                 public void onDisposeSyncProxy() {
-
-
                     LockScreenActivity.updateLockScreenStatus(LockScreenStatus.OFF);
-
-
                 }
 
                 @Override
                 public void onLockScreenNotification(OnLockScreenStatus notification) {
                     LockScreenActivity.updateLockScreenStatus(notification.getShowLockScreen());
-
-                    sendLockScreenMsg("Bruno Garcia Testando o Broadcast Receiver - TESTE");
-
-                    /*if(notification.getHMILevel().equals("HMI_FULL")  && notification.getShowLockScreen() == LockScreenStatus.REQUIRED) {
-                        Intent showLockScreenIntent = new Intent(INSTANCE, LockScreenAct.class);
-                        showLockScreenIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        //if(lockScreenManager.getLockScreenIcon() != null){
-                        //    showLockScreenIntent.putExtra(LockScreenActivity.LOCKSCREEN_BITMAP_EXTRA, lockScreenManager.getLockScreenIcon());
-                        //}
-                        startActivity(showLockScreenIntent);
-                    }else if(notification.getShowLockScreen() == LockScreenStatus.OFF){
-                        sendBroadcast(new Intent("CLOSE_LOCK_SCREEN"));
-                    }*/
-
                 }
 
                 @Override
                 public void onCreate(Activity activity, Bundle bundle) {
-
-                    try {
-                        //activity.setContentView(R.layout.activity_lock_screen_new);
-                        //txtConteudo =  (TextView) activity.findViewById(R.id.txtConteudo);
-
-
-                        //txtConteudo.setText("Bruno testando....");
-
-                    } catch (Exception e) {
-                        e.getStackTrace();
-                    }
-
-
-
+                    //if you want to implement a custom Lock Screen:
+                    //activity.setContentView(R.layout.custom_activity_lock_screen_name);
                 }
 
                 @Override
-                public void onBroadcastReceive(Context context, Intent intent) {
-
-                }
+                public void onBroadcastReceive(Context context, Intent intent) { }
             };
 
-
-
-            //LockScreenAct.registerActivityLifecycle(INSTANCE);
-
-            //lockScreen = new LockScreenAct();
-
-
-            Config.ConnectionType = ServiceListeners.ProxyConnection.SYNC;
+            //for connection with SYNC
+            //Config.ConnectionType = ServiceListeners.ProxyConnection.SYNC;
+            //for connection with MANTICORE
+            Config.ConnectionType = ServiceListeners.ProxyConnection.MANTICORE;
+            Config.ManticorePort = 12345;
 
             initSdlService();
-
-
-
-
-            new Thread() {
-                @Override
-                public void run() {
-                    do {
-                        try {
-                            Thread.sleep(30000);
-                            //deleteCache(ctx);
-                            System.gc();
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } while (true);
-                }
-            }.start();
-
 
         } catch (Exception e) {
             e.getStackTrace();
         }
-
-
-
-
-    }
-
-    private void sendLockScreenMsg(String text) {
-        Intent intent = new Intent("MSG");
-        intent.putExtra("extra", text );
-        sendBroadcast(intent);
-    }
-
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-
-        super.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    public void onTrimMemory(int level) {
-        Log.d("CAMPUSPARTY", "onTrimMemory: Level-"+level);
-        super.onTrimMemory(level);
     }
 
 
 
-
-
-    public class ClearCache implements Runnable {
-
-
-        private Context ctx;
-
-        public ClearCache(Context ctx) {
-            this.ctx = ctx;
-        }
-
-        @Override
-        public void run() {
-
-            do {
-                try {
-                    Thread.sleep(30000);
-                    //deleteCache(ctx);
-                    System.gc();
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } while (isRunning(ctx));
-
-
-        }
-
-        public void deleteCache(Context context) {
-            try {
-                File dir = context.getCacheDir();
-                deleteDir(dir);
-            } catch (Exception e) {}
-        }
-
-        public boolean deleteDir(File dir) {
-            if (dir != null && dir.isDirectory()) {
-                String[] children = dir.list();
-                for (int i = 0; i < children.length; i++) {
-                    boolean success = deleteDir(new File(dir, children[i]));
-                    if (!success) {
-                        return false;
-                    }
-                }
-                return dir.delete();
-            } else if(dir!= null && dir.isFile()) {
-                return dir.delete();
-            } else {
-                return false;
-            }
-        }
-
-        public boolean isRunning(Context ctx) {
-            ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
-
-            List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
-
-            for (ActivityManager.RunningTaskInfo task : tasks) {
-                if (ctx.getPackageName().equalsIgnoreCase(task.baseActivity.getPackageName()))
-                    return true;
-            }
-            return false;
-        }
-
-    }
 
 
 }
