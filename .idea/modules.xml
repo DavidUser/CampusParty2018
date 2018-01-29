@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://C:\Users\BGARCI67\Documents\Mobile\CampusPartyTeste\CAmpusPartyTest.iml" filepath="C:\Users\BGARCI67\Documents\Mobile\CampusPartyTeste\CAmpusPartyTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CampusParty.iml" filepath="$PROJECT_DIR$/CampusParty.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CampusPartyTeste.iml" filepath="$PROJECT_DIR$/CampusPartyTeste.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/interfaceSDL/interfaceSDL.iml" filepath="$PROJECT_DIR$/interfaceSDL/interfaceSDL.iml" />
       <module fileurl="file://$PROJECT_DIR$/smartdevicelink/smartdevicelink.iml" filepath="$PROJECT_DIR$/smartdevicelink/smartdevicelink.iml" />

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ford.sa.campuspartytest.ItemDetailAct"
+    tools:context="com.ford.sa.campuspartyexample.ItemDetailAct"
     tools:showIn="@layout/activity_item_detail">
 
 
@@ -262,19 +262,22 @@
                     android:id="@+id/txtInnerRightRear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Inner Right Rear: "/>
+                    android:text="Inner Right Rear: "
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txtInnerLeftRear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Inner Left Rear: "/>
+                    android:text="Inner Left Rear: "
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txtPressureTelltale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Pressure Telltale: "/>
+                    android:text="Pressure Telltale: "
+                    android:visibility="gone"/>
             </LinearLayout>
 
 
@@ -340,7 +343,8 @@
                     android:id="@+id/txtIgnitionStableStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Ignition Stable Status: "/>
+                    android:text="Ignition Stable Status: "
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/txtParkBreakeActive"

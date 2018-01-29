@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ford.sa.campuspartytest.MainActivity"
+    tools:context="com.ford.sa.campuspartyexample.MainActivity"
     tools:showIn="@layout/activity_main">
 
 
@@ -26,8 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="@color/md_white_1000"
-        android:background="@color/md_blue_500"
+        android:theme="@style/PrimaryButton"
         android:text="Collected Data List"/>
 
 
