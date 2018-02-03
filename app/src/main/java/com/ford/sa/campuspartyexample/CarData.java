@@ -11,9 +11,9 @@ import java.util.Map;
 public class CarData implements Serializable {
 
     public Map<String, String> data = new HashMap<String, String>();
+    protected static String defaultValue = " -- ";
 
     private CarData() {
-      String defaultValue = " -- ";
 
       /* All Attributes */
       data.put("vin", defaultValue);
@@ -257,7 +257,7 @@ public class CarData implements Serializable {
 
     /* set attributes by string name */
     private void setItem(String item, String value) {
-        data.put(item, value);
+        data.put(item, value? value : defaultValue);
     }
 
     /* get attributes by string name */
