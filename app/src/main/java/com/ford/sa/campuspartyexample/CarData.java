@@ -71,272 +71,139 @@ public class CarData implements Serializable {
 
     private long timestamp;
 
-    /* Getters & Setters */
+    /* Getters */
     public String getLatitudeDegrees() {
         return latitudeDegrees;
-    }
-
-    public void setLatitudeDegrees(String latitudeDegrees) {
-        this.latitudeDegrees = latitudeDegrees;
     }
 
     public String getLongitudeDegrees() {
         return longitudeDegrees;
     }
 
-    public void setLongitudeDegrees(String longitudeDegrees) {
-        this.longitudeDegrees = longitudeDegrees;
-    }
-
     public String getAltitude() {
         return altitude;
-    }
-
-    public void setAltitude(String altitude) {
-        this.altitude = altitude;
     }
 
     public String getHeading() {
         return heading;
     }
 
-    public void setHeading(String heading) {
-        this.heading = heading;
-    }
-
     public String getCompassDirection() {
         return compassDirection;
-    }
-
-    public void setCompassDirection(String compassDirection) {
-        this.compassDirection = compassDirection;
     }
 
     public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public String getVin() {
         return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
     }
 
     public String getFuelLevel_State() {
         return fuelLevel_State;
     }
 
-    public void setFuelLevel_State(String fuelLevel_State) {
-        this.fuelLevel_State = fuelLevel_State;
-    }
-
     public String getPrndl() {
         return prndl;
-    }
-
-    public void setPrndl(String prndl) {
-        this.prndl = prndl;
     }
 
     public String getFuelLevel() {
         return fuelLevel;
     }
 
-    public void setFuelLevel(String fuelLevel) {
-        this.fuelLevel = fuelLevel;
-    }
-
     public String getSpeed() {
         return speed;
-    }
-
-    public void setSpeed(String speed) {
-        this.speed = speed;
     }
 
     public String getExternalTemperature() {
         return externalTemperature;
     }
 
-    public void setExternalTemperature(String externalTemperature) {
-        this.externalTemperature = externalTemperature;
-    }
-
     public String getRpm() {
         return rpm;
-    }
-
-    public void setRpm(String rpm) {
-        this.rpm = rpm;
     }
 
     public String getEngineTorque() {
         return engineTorque;
     }
 
-    public void setEngineTorque(String engineTorque) {
-        this.engineTorque = engineTorque;
-    }
-
     public String getOdometer() {
         return odometer;
-    }
-
-    public void setOdometer(String odometer) {
-        this.odometer = odometer;
     }
 
     public String getDriverBraking() {
         return driverBraking;
     }
 
-    public void setDriverBraking(String driverBraking) {
-        this.driverBraking = driverBraking;
-    }
-
     public String getLowBeamsOn() {
         return lowBeamsOn;
-    }
-
-    public void setLowBeamsOn(String lowBeamsOn) {
-        this.lowBeamsOn = lowBeamsOn;
     }
 
     public String getAmbientLightSensorStatus() {
         return ambientLightSensorStatus;
     }
 
-    public void setAmbientLightSensorStatus(String ambientLightSensorStatus) {
-        this.ambientLightSensorStatus = ambientLightSensorStatus;
-    }
-
     public String getHighBeamsOn() {
         return highBeamsOn;
-    }
-
-    public void setHighBeamsOn(String highBeamsOn) {
-        this.highBeamsOn = highBeamsOn;
     }
 
     public String getRightRear() {
         return rightRear;
     }
 
-    public void setRightRear(String rightRear) {
-        this.rightRear = rightRear;
-    }
-
     public String getPressureTelltale() {
         return pressureTelltale;
-    }
-
-    public void setPressureTelltale(String pressureTelltale) {
-        this.pressureTelltale = pressureTelltale;
     }
 
     public String getInnerLeftRear() {
         return innerLeftRear;
     }
 
-    public void setInnerLeftRear(String innerLeftRear) {
-        this.innerLeftRear = innerLeftRear;
-    }
-
     public String getRightFront() {
         return rightFront;
-    }
-
-    public void setRightFront(String rightFront) {
-        this.rightFront = rightFront;
     }
 
     public String getInnerRightRear() {
         return innerRightRear;
     }
 
-    public void setInnerRightRear(String innerRightRear) {
-        this.innerRightRear = innerRightRear;
-    }
-
     public String getLeftRear() {
         return leftRear;
-    }
-
-    public void setLeftRear(String leftRear) {
-        this.leftRear = leftRear;
     }
 
     public String getLeftFront() {
         return leftFront;
     }
 
-    public void setLeftFront(String leftFront) {
-        this.leftFront = leftFront;
-    }
-
     public String getRearLeftDoorAjar() {
         return rearLeftDoorAjar;
-    }
-
-    public void setRearLeftDoorAjar(String rearLeftDoorAjar) {
-        this.rearLeftDoorAjar = rearLeftDoorAjar;
     }
 
     public String getParkBrakeActive() {
         return parkBrakeActive;
     }
 
-    public void setParkBrakeActive(String parkBrakeActive) {
-        this.parkBrakeActive = parkBrakeActive;
-    }
-
     public String getDriverDoorAjar() {
         return driverDoorAjar;
-    }
-
-    public void setDriverDoorAjar(String driverDoorAjar) {
-        this.driverDoorAjar = driverDoorAjar;
     }
 
     public String getRearRightDoorAjar() {
         return rearRightDoorAjar;
     }
 
-    public void setRearRightDoorAjar(String rearRightDoorAjar) {
-        this.rearRightDoorAjar = rearRightDoorAjar;
-    }
-
     public String getIgnitionStableStatus() {
         return ignitionStableStatus;
-    }
-
-    public void setIgnitionStableStatus(String ignitionStableStatus) {
-        this.ignitionStableStatus = ignitionStableStatus;
     }
 
     public String getPassengerDoorAjar() {
         return passengerDoorAjar;
     }
 
-    public void setPassengerDoorAjar(String passengerDoorAjar) {
-        this.passengerDoorAjar = passengerDoorAjar;
-
-
-    }
-
     public String getIgnitionStatus() {
         return ignitionStatus;
     }
 
-    public void setIgnitionStatus(String ignitionStatus) {
-        this.ignitionStatus = ignitionStatus;
-    }
 
     /* GET DATA */
     public void processVehicleData(GetVehicleDataResponse notification) {
