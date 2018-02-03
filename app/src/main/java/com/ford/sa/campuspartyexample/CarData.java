@@ -6,14 +6,60 @@ import com.smartdevicelink.proxy.rpc.OnVehicleData;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
-/**
- * Created by bgarci67 on 1/5/18.
- */
+public class CarData implements Serializable {
 
-public class CarData implements Serializable{
+    public Map<String, String> data = new HashMap<String, String>();
 
+    private CarData() {
+      String defaultValue = " -- ";
 
+      /* All Attributes */
+      data.put("vin", defaultValue);
+      data.put("fuelLevel_State", defaultValue);
+      data.put("prndl", defaultValue);
+      data.put("fuelLevel", defaultValue);
+      data.put("speed", defaultValue);
+      data.put("externalTemperature", defaultValue);
+      data.put("rpm", defaultValue);
+      data.put("engineTorque", defaultValue);
+      data.put("odometer", defaultValue);
+      data.put("driverBraking", defaultValue);
+      data.put("headLampStatus", defaultValue);
+      data.put("gps", defaultValue);
+      data.put("tirePressure", defaultValue);
+
+      /* headLampStatus */
+      data.put("lowBeamsOn", defaultValue);
+      data.put("ambientLightSensorStatus", defaultValue);
+      data.put("highBeamsOn", defaultValue);
+
+      /* GPS */
+      data.put("latitudeDegrees", defaultValue);
+      data.put("longitudeDegrees", defaultValue);
+      data.put("altitude", defaultValue);
+      data.put("heading", defaultValue);
+      data.put("compassDirection", defaultValue);
+
+      /* tirePressure */
+      data.put("rightRear", defaultValue);
+      data.put("pressureTelltale", defaultValue);
+      data.put("innerLeftRear", defaultValue);
+      data.put("rightFront", defaultValue);
+      data.put("innerRightRear", defaultValue);
+      data.put("leftRear", defaultValue);
+      data.put("leftFront", defaultValue);
+
+      /* bodyInformation */
+      data.put("rearLeftDoorAjar", defaultValue);
+      data.put("parkBrakeActive", defaultValue);
+      data.put("driverDoorAjar", defaultValue);
+      data.put("rearRightDoorAjar", defaultValue);
+      data.put("ignitionStableStatus", defaultValue);
+      data.put("passengerDoorAjar", defaultValue);
+      data.put("ignitionStatus", defaultValue);
+    }
 
     /* Singleton */
     private static CarData INSTANCE;
@@ -23,56 +69,7 @@ public class CarData implements Serializable{
         return INSTANCE;
     }
 
-
-    /* All Attributes */
-    public String[] VehicleParams = {"vin","fuelLevel_State", "tirePressure", "prndl", "fuelLevel", "speed","externalTemperature","rpm", "engineTorque", "odometer","driverBraking","headLampStatus","gps","tirePressure"};
-    private String vin = " -- ";
-    private String fuelLevel_State= " -- ";
-    private String prndl = " -- ";
-    private String fuelLevel = " -- ";
-    private String speed = " -- ";
-    private String externalTemperature = " -- ";
-    private String rpm = " -- ";
-    private String engineTorque = " -- ";
-    private String odometer = " -- ";
-    private String driverBraking = " -- ";
-
-
     private long timestamp;
-
-    /* headLampStatus */
-    public String[] headLampParams = {"lowBeamsOn","ambientLightSensorStatus","highBeamsOn"};
-    private String lowBeamsOn = " -- ";
-    private String ambientLightSensorStatus = "";
-    private String highBeamsOn = " -- ";
-
-    /* GPS */
-    public String[] gpsParams = {"latitudeDegrees","longitudeDegrees","altitude","heading","compassDirection"};
-    private String latitudeDegrees = " -- ";
-    private String longitudeDegrees = " -- ";
-    private String altitude = " -- ";
-    private String heading = " -- ";
-    private String compassDirection = " -- ";
-
-    /* tirePressure */
-    public String[] tirePressureParams = {"rightRear","pressureTelltale","innerLeftRear","rightFront","innerRightRear","leftRear","leftFront"};
-    private String rightRear = " -- ";
-    private String pressureTelltale = " -- ";
-    private String innerLeftRear = " -- ";
-    private String rightFront = " -- ";
-    private String innerRightRear = " -- ";
-    private String leftRear = " -- ";
-    private String leftFront = " -- ";
-
-    /* bodyInformation */
-    public String[] bodyInformationParams = {"rearLeftDoorAjar","parkBrakeActive","driverDoorAjar","rearRightDoorAjar","ignitionStableStatus","passengerDoorAjar","ignitionStatus"};
-    private String rearLeftDoorAjar = " -- ";
-    private String parkBrakeActive = " -- ";
-    private String driverDoorAjar = " -- ";
-    private String rearRightDoorAjar = " -- ";
-    private String ignitionStableStatus = " -- ";
-    private String passengerDoorAjar = " -- ";
-    private String ignitionStatus = " -- ";
 
     /* Getters & Setters */
     public String getLatitudeDegrees() {
@@ -416,204 +413,17 @@ public class CarData implements Serializable{
     }
 
     /* set attributes by string name */
-    public void setItem(String item, String valor) {
-
-        valor = valor == null ? " -- " : valor;
-
-        switch (item){
-            case "vin":
-                setVin(valor);
-                break;
-            case "fuelLevel_State":
-                setFuelLevel_State(valor);
-                break;
-            case "prndl":
-                setPrndl(valor);
-                break;
-            case "fuelLevel":
-                setFuelLevel(valor);
-                break;
-            case "speed":
-                setSpeed(valor);
-                break;
-            case "externalTemperature":
-                setExternalTemperature(valor);
-                break;
-            case "rpm":
-                setRpm(valor);
-                break;
-            case "driverBraking":
-                setDriverBraking(valor);
-                break;
-            case "engineTorque":
-                setEngineTorque(valor);
-                break;
-            case "odometer":
-                setOdometer(valor);
-                break;
-            case "lowBeamsOn":
-                setLowBeamsOn(valor);
-                break;
-            case "highBeamsOn":
-                setHighBeamsOn(valor);
-                break;
-            case "ambientLightSensorStatus":
-                setAmbientLightSensorStatus(valor);
-                break;
-            case "rearLeftDoorAjar":
-                setRearLeftDoorAjar(valor);
-                break;
-            case "rearRightDoorAjar":
-                setRearRightDoorAjar(valor);
-                break;
-            case "ignitionStatus":
-                setIgnitionStatus(valor);
-                break;
-            case "driverDoorAjar":
-                setDriverDoorAjar(valor);
-                break;
-            case "parkBrakeActive":
-                setParkBrakeActive(valor);
-                break;
-            case "passengerDoorAjar":
-                setPassengerDoorAjar(valor);
-                break;
-            case "ignitionStableStatus":
-                setIgnitionStableStatus(valor);
-                break;
-            case "latitudeDegrees":
-                setLatitudeDegrees(valor);
-                break;
-            case "longitudeDegrees":
-                setLongitudeDegrees(valor);
-                break;
-            case "altitude":
-                setAltitude(valor);
-                break;
-            case "heading":
-                setHeading(valor);
-                break;
-            case "compassDirection":
-                setCompassDirection(valor);
-                break;
-            case "rightRear":
-                setRightRear(valor);
-                break;
-            case "pressureTelltale":
-                setPressureTelltale(valor);
-                break;
-            case "innerLeftRear":
-                setInnerLeftRear(valor);
-                break;
-            case "rightFront":
-                setRightFront(valor);
-                break;
-            case "innerRightRear":
-                setInnerRightRear(valor);
-                break;
-            case "leftRear":
-                setLeftRear(valor);
-                break;
-            case "leftFront":
-                setLeftFront(valor);
-                break;
-        }
+    private void setItem(String item, String value) {
+        data.put(item, value);
     }
 
     /* get attributes by string name */
     public String getItem(String item) {
-        switch (item){
-            case "vin":
-                return getVin();
-            case "fuelLevel_State":
-                return getFuelLevel_State();
-            case "prndl":
-                return getPrndl();
-            case "fuelLevel":
-                return getFuelLevel();
-            case "speed":
-                return getSpeed();
-            case "externalTemperature":
-                return getExternalTemperature();
-            case "rpm":
-                return getRpm();
-            case "driverBraking":
-                return getDriverBraking();
-            case "engineTorque":
-                return getEngineTorque();
-            case "odometer":
-                return getOdometer();
-            case "lowBeamsOn":
-                return getLowBeamsOn();
-            case "highBeamsOn":
-                return getHighBeamsOn();
-            case "ambientLightSensorStatus":
-                return getAmbientLightSensorStatus();
-            case "rearLeftDoorAjar":
-                return  getRearLeftDoorAjar();
-            case "rearRightDoorAjar":
-                return getRearRightDoorAjar();
-            case "ignitionStatus":
-                return getIgnitionStatus();
-            case "driverDoorAjar":
-                return  getDriverDoorAjar();
-            case "parkBrakeActive":
-                return  getParkBrakeActive();
-            case "passengerDoorAjar":
-                return getPassengerDoorAjar();
-            case "ignitionStableStatus":
-                return getIgnitionStableStatus();
-            case "latitudeDegrees":
-                return getLatitudeDegrees();
-            case "longitudeDegrees":
-                return getLongitudeDegrees();
-            case "altitude":
-                return getAltitude();
-            case "heading":
-                return getHeading();
-            case "compassDirection":
-                return getCompassDirection();
-            case "rightRear":
-                return getRightRear();
-            case "pressureTelltale":
-                return getPressureTelltale();
-            case "innerLeftRear":
-                return getInnerLeftRear();
-            case "rightFront":
-                return getRightFront();
-            case "innerRightRear":
-                return getInnerRightRear();
-            case "leftRear":
-                return getLeftRear();
-            case "leftFront":
-                return getLeftFront();
-            default:
-                return "";
-        }
+        return data.get(item);
     }
 
     /* set attributes from Static CarData Instance (used in Subscribe only) */
     public void newCarDataSubscribe(){
-        for (String obj : VehicleParams) {
-            setItem(obj, CarData.INSTANCE.getItem(obj));
-        }
-
-        for (String obj : tirePressureParams) {
-            setItem(obj, CarData.INSTANCE.getItem(obj));
-        }
-
-        for (String obj : bodyInformationParams) {
-            setItem(obj, CarData.INSTANCE.getItem(obj));
-        }
-
-        for (String obj : headLampParams) {
-            setItem(obj, CarData.INSTANCE.getItem(obj));
-        }
-
-        for (String obj : gpsParams) {
-            setItem(obj, CarData.INSTANCE.getItem(obj));
-        }
-
         setTimestamp(System.currentTimeMillis());
     }
 
