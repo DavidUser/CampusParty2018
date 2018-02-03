@@ -78,31 +78,6 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
             }
         });
 
-
-
-       /* mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                LinearLayoutManager llm = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-
-                GetDataAdapter adapter = (GetDataAdapter) mRecyclerView.getAdapter();
-
-                if (Shared.getInstance().getListCarData().size() == llm.findLastCompletelyVisibleItemPosition() + 1) {
-                    List<CarData> listAux = mListCarData;
-
-                    //for (int i = 0; i < listAux.size(); i++) {
-                    //    adapter.addListItem(listAux.get(i), mListCarData.size());
-                    //}
-                }
-            }
-        });*/
         mRecyclerView.setHasFixedSize(true);
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -127,7 +102,6 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
         mBundle.putSerializable("CarData", (Serializable) Shared.getInstance().getListCarData().get(position));
         it.putExtras(mBundle);
 
-        //it.putExtra("idContrato", listaContratos.get(position).getId());
         startActivity(it);
 
     }
@@ -142,7 +116,6 @@ public class DetailInfoAct extends AppCompatActivity implements RecyclerViewOnCl
     @Override
     protected void onResume() {
         Log.d("BRUNO TESTE", "ON RESUME - BRUNO TESTE");
-        //mAdapter.notifyItemInserted(Shared.getInstance().getListCarData().size() - 1);
         mAdapter.notifyDataSetChanged();
         super.onResume();
     }
