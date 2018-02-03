@@ -204,11 +204,9 @@ public class CarData implements Serializable {
         return ignitionStatus;
     }
 
+    private void process(Hashtable<String, Object> data) {
 
-    /* GET DATA */
-    public void processVehicleData(GetVehicleDataResponse notification) {
-
-        for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)notification.getStore().get("response") ).entrySet() ) {
+        for (HashMap.Entry<String, Object> obj : data.entrySet() ) {
             if (obj.getKey().equals("parameters")) {
                 for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
                     if (item.getKey().equals("tirePressure")) {
@@ -240,36 +238,14 @@ public class CarData implements Serializable {
         setTimestamp(System.currentTimeMillis());
     }
 
+    /* GET DATA */
+    public void processVehicleData(GetVehicleDataResponse notification) {
+      process((Hashtable<String, Object>) notification.getStore().get("response"));
+    }
+
     /* SUBSCRIBE */
     public void processVehicleSubscribe(OnVehicleData responseSubs){
-        for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>)responseSubs.getStore().get("notification") ).entrySet() ) {
-            if (obj.getKey().equals("parameters")) {
-                for (HashMap.Entry<String, Object> item : ((Hashtable<String, Object>)obj.getValue()).entrySet() ) {
-                    if (item.getKey().equals("tirePressure")) {
-                        for ( HashMap.Entry<String, Object> objTirePressute : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
-                            if (objTirePressute.getValue().getClass() == "".getClass()){
-                                setItem(objTirePressute.getKey(), objTirePressute.getValue().toString());
-                            }
-                            else {
-                                setItem(objTirePressute.getKey().toString(), ((Hashtable<String, Object>)objTirePressute.getValue()).get("status").toString() );
-                            }
-                        }
-                    }
-                    else if (item.getKey().equals("bodyInformation")) {
-                        setItemSubItem((Hashtable<String, Object>)item.getValue());
-                    }
-                    else if (item.getKey().equals("headLampStatus")) {
-                        setItemSubItem((Hashtable<String, Object>)item.getValue());
-                    }
-                    else if (item.getKey().equals("gps")) {
-                        setItemSubItem((Hashtable<String, Object>)item.getValue());
-                    }
-                    else {
-                        setItem(item.getKey(), item.getValue().toString());
-                    }
-                }
-            }
-        }
+      process((Hashtable<String, Object>) responseSubs.getStore().get("notification"));
     }
 
     /* process Hasmap to get sub-itens */
