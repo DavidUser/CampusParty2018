@@ -13,54 +13,6 @@ public class CarData implements Serializable {
     public Map<String, String> data = new HashMap<String, String>();
     protected static String defaultValue = " -- ";
 
-    private CarData() {
-
-      /* All Attributes */
-      data.put("vin", defaultValue);
-      data.put("fuelLevel_State", defaultValue);
-      data.put("prndl", defaultValue);
-      data.put("fuelLevel", defaultValue);
-      data.put("speed", defaultValue);
-      data.put("externalTemperature", defaultValue);
-      data.put("rpm", defaultValue);
-      data.put("engineTorque", defaultValue);
-      data.put("odometer", defaultValue);
-      data.put("driverBraking", defaultValue);
-      data.put("headLampStatus", defaultValue);
-      data.put("gps", defaultValue);
-      data.put("tirePressure", defaultValue);
-
-      /* headLampStatus */
-      data.put("lowBeamsOn", defaultValue);
-      data.put("ambientLightSensorStatus", defaultValue);
-      data.put("highBeamsOn", defaultValue);
-
-      /* GPS */
-      data.put("latitudeDegrees", defaultValue);
-      data.put("longitudeDegrees", defaultValue);
-      data.put("altitude", defaultValue);
-      data.put("heading", defaultValue);
-      data.put("compassDirection", defaultValue);
-
-      /* tirePressure */
-      data.put("rightRear", defaultValue);
-      data.put("pressureTelltale", defaultValue);
-      data.put("innerLeftRear", defaultValue);
-      data.put("rightFront", defaultValue);
-      data.put("innerRightRear", defaultValue);
-      data.put("leftRear", defaultValue);
-      data.put("leftFront", defaultValue);
-
-      /* bodyInformation */
-      data.put("rearLeftDoorAjar", defaultValue);
-      data.put("parkBrakeActive", defaultValue);
-      data.put("driverDoorAjar", defaultValue);
-      data.put("rearRightDoorAjar", defaultValue);
-      data.put("ignitionStableStatus", defaultValue);
-      data.put("passengerDoorAjar", defaultValue);
-      data.put("ignitionStatus", defaultValue);
-    }
-
     /* Singleton */
     private static CarData INSTANCE;
     public static CarData getInstance() {
@@ -256,7 +208,7 @@ public class CarData implements Serializable {
 
     /* get attributes by string name */
     public String getItem(String item) {
-        return data.get(item);
+        return data.getOrDefault(item, defaultValue);
     }
 
     /* set attributes from Static CarData Instance (used in Subscribe only) */
