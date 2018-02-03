@@ -11,7 +11,7 @@ import java.util.Map;
 public class CarData implements Serializable {
 
     public Map<String, String> data = new HashMap<String, String>();
-    protected static String defaultValue = " -- ";
+    protected static String DEFAULT_VALUE = " -- ";
 
     /* Singleton */
     private static CarData INSTANCE;
@@ -156,12 +156,12 @@ public class CarData implements Serializable {
         return getItem("ignitionStatus");
     }
 
-    private void UpdateTimestamp() {
+    private void updateTimestamp() {
         this.timestamp = System.currentTimeMillis();
     }
 
     private void process(Hashtable<String, Object> data) {
-        UpdateTimestamp();
+        updateTimestamp();
 
         Hashtable<String, Object> parameters = data.get("parameters"); 
         if (parameters == null) 
@@ -203,12 +203,12 @@ public class CarData implements Serializable {
 
     /* set attributes by string name */
     private void setItem(String item, String value) {
-        data.put(item, value? value : defaultValue);
+        data.put(item, value? value : DEFAULT_VALUE);
     }
 
     /* get attributes by string name */
     public String getItem(String item) {
-        return data.getOrDefault(item, defaultValue);
+        return data.getOrDefault(item, DEFAULT_VALUE);
     }
 
     /* set attributes from Static CarData Instance (used in Subscribe only) */
