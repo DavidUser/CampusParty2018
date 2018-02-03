@@ -170,11 +170,11 @@ public class CarData implements Serializable {
         for (HashMap.Entry<String, Object> item : parameters.entrySet() ) {
             switch (item.getKey()) {
                 case "tirePressure":
-                    for ( HashMap.Entry<String, Object> objTirePressute : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
+                    for ( HashMap.Entry<String, Object> objTirePressure : ((Hashtable<String,Object>)item.getValue()).entrySet() ) {
                         setItem(
-                            objTirePressute.getKey(), 
-                            objTirePressute.getValue() instanceof String? 
-                            objTirePressute.getValue().toString() : ((Hashtable<String, Object>)objTirePressute.getValue()).get("status").toString()
+                            objTirePressure.getKey(), 
+                            objTirePressure.getValue() instanceof String? 
+                            objTirePressure.getValue().toString() : ((Hashtable<String, Object>)objTirePressure.getValue()).get("status").toString()
                         );
                     }
                     break;
