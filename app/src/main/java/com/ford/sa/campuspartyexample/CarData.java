@@ -45,7 +45,7 @@ public class CarData implements Serializable {
     }
 
     public long getTimestamp() {
-        return getItem("timestamp");
+        return timestamp;
     }
 
     public String getVin() {
@@ -163,7 +163,7 @@ public class CarData implements Serializable {
     private void process(Hashtable<String, Object> data) {
         updateTimestamp();
 
-        Hashtable<String, Object> parameters = data.get("parameters"); 
+        Hashtable<String, Object> parameters = (Hashtable<String, Object>) data.get("parameters");
         if (parameters == null) 
             return;
 
@@ -181,7 +181,7 @@ public class CarData implements Serializable {
                 case "bodyInformation":
                 case "headLampStatus":
                 case "gps" :
-                    for (HashMap.Entry<String, Object> obj : item.entrySet() ) {
+                    for (HashMap.Entry<String, Object> obj : ((Hashtable<String, Object>) item.getValue()).entrySet() ) {
                         setItem(obj.getKey(), obj.getValue().toString());
                     }
                     break;
@@ -203,17 +203,18 @@ public class CarData implements Serializable {
 
     /* set attributes by string name */
     private void setItem(String item, String value) {
-        data.put(item, value? value : DEFAULT_VALUE);
+        data.put(item, value == null? DEFAULT_VALUE : value);
     }
 
     /* get attributes by string name */
     public String getItem(String item) {
-        return data.getOrDefault(item, DEFAULT_VALUE);
+        String value = data.get(item);
+        return value == null? DEFAULT_VALUE : value;
     }
 
     /* set attributes from Static CarData Instance (used in Subscribe only) */
     public void newCarDataSubscribe(){
-        setTimestamp(System.currentTimeMillis());
+        updateTimestamp();
     }
 
 }
