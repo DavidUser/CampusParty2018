@@ -73,135 +73,135 @@ public class CarData implements Serializable {
 
     /* Getters */
     public String getLatitudeDegrees() {
-        return latitudeDegrees;
+        return getItem("latitudeDegrees");
     }
 
     public String getLongitudeDegrees() {
-        return longitudeDegrees;
+        return getItem("longitudeDegrees");
     }
 
     public String getAltitude() {
-        return altitude;
+        return getItem("altitude");
     }
 
     public String getHeading() {
-        return heading;
+        return getItem("heading");
     }
 
     public String getCompassDirection() {
-        return compassDirection;
+        return getItem("compassDirection");
     }
 
     public long getTimestamp() {
-        return timestamp;
+        return getItem("timestamp");
     }
 
     public String getVin() {
-        return vin;
+        return getItem("vin");
     }
 
     public String getFuelLevel_State() {
-        return fuelLevel_State;
+        return getItem("fuelLevel_State");
     }
 
     public String getPrndl() {
-        return prndl;
+        return getItem("prndl");
     }
 
     public String getFuelLevel() {
-        return fuelLevel;
+        return getItem("fuelLevel");
     }
 
     public String getSpeed() {
-        return speed;
+        return getItem("speed");
     }
 
     public String getExternalTemperature() {
-        return externalTemperature;
+        return getItem("externalTemperature");
     }
 
     public String getRpm() {
-        return rpm;
+        return getItem("rpm");
     }
 
     public String getEngineTorque() {
-        return engineTorque;
+        return getItem("engineTorque");
     }
 
     public String getOdometer() {
-        return odometer;
+        return getItem("odometer");
     }
 
     public String getDriverBraking() {
-        return driverBraking;
+        return getItem("driverBraking");
     }
 
     public String getLowBeamsOn() {
-        return lowBeamsOn;
+        return getItem("lowBeamsOn");
     }
 
     public String getAmbientLightSensorStatus() {
-        return ambientLightSensorStatus;
+        return getItem("ambientLightSensorStatus");
     }
 
     public String getHighBeamsOn() {
-        return highBeamsOn;
+        return getItem("highBeamsOn");
     }
 
     public String getRightRear() {
-        return rightRear;
+        return getItem("rightRear");
     }
 
     public String getPressureTelltale() {
-        return pressureTelltale;
+        return getItem("pressureTelltale");
     }
 
     public String getInnerLeftRear() {
-        return innerLeftRear;
+        return getItem("innerLeftRear");
     }
 
     public String getRightFront() {
-        return rightFront;
+        return getItem("rightFront");
     }
 
     public String getInnerRightRear() {
-        return innerRightRear;
+        return getItem("innerRightRear");
     }
 
     public String getLeftRear() {
-        return leftRear;
+        return getItem("leftRear");
     }
 
     public String getLeftFront() {
-        return leftFront;
+        return getItem("leftFront");
     }
 
     public String getRearLeftDoorAjar() {
-        return rearLeftDoorAjar;
+        return getItem("rearLeftDoorAjar");
     }
 
     public String getParkBrakeActive() {
-        return parkBrakeActive;
+        return getItem("parkBrakeActive");
     }
 
     public String getDriverDoorAjar() {
-        return driverDoorAjar;
+        return getItem("driverDoorAjar");
     }
 
     public String getRearRightDoorAjar() {
-        return rearRightDoorAjar;
+        return getItem("rearRightDoorAjar");
     }
 
     public String getIgnitionStableStatus() {
-        return ignitionStableStatus;
+        return getItem("ignitionStableStatus");
     }
 
     public String getPassengerDoorAjar() {
-        return passengerDoorAjar;
+        return getItem("passengerDoorAjar");
     }
 
     public String getIgnitionStatus() {
-        return ignitionStatus;
+        return getItem("ignitionStatus");
     }
 
     private void process(Hashtable<String, Object> data) {
