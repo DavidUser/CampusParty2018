@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Context CONTEXT;
-    private Button btnDadosGetData, btnLimparDados;
+    private Button btnDadosGetData, btnLimparDados, btnHealth;
 
 
 
@@ -44,6 +44,18 @@ public class MainActivity extends AppCompatActivity {
                 CONTEXT.startActivity(i);
             }
         });
+
+        btnHealth = (Button) findViewById(R.id.btnHealth);
+
+        btnHealth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CONTEXT, CarHealth.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                CONTEXT.startActivity(i);
+            }
+        });
+
     }
 
     @Override
